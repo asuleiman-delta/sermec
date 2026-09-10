@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Michroma&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+@keyframes carga-logo { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-14px); } }
+@keyframes carga-subir { from { transform: translateY(0); } 99% { visibility: visible; } to { transform: translateY(-101%); visibility: hidden; } }
+html { scroll-behavior: smooth; }
+nav { transition: top 300ms cubic-bezier(.22,.9,.28,1); }
+nav.nav-fija { top: clamp(12px,1.6vw,22px) !important; }
+@keyframes holo { 0% { background-position: 0 0; } 100% { background-position: 200% 0; } }
+@keyframes flotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes marcas-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes aparecer { from { opacity: 0; transform: translateY(40px) scale(0.985); filter: blur(7px); } to { opacity: 1; transform: none; filter: blur(0); } }
+.rv { opacity: 0; }
+.rv-on { animation: aparecer 950ms cubic-bezier(.22,.9,.28,1) both; }
+body { margin: 0; background: #e9f1fa; color: #12100f; font-family: 'Source Sans 3', system-ui, sans-serif; text-wrap: pretty; -webkit-font-smoothing: antialiased; }
+a { color: #12100f; text-decoration: none; }
+a:hover { color: #005090; }
+@media (max-width: 900px) {
+  .g-sectores { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+  .g-cobertura { grid-template-columns: minmax(0,1fr) !important; }
+}
+.nav-panel.abierto { display: flex !important; animation: aparecer 260ms ease both; }
+@media (min-width: 861px) { .nav-panel { display: none !important; } }
+@media (max-width: 860px) {
+  .fondo-hero { opacity: 0.32 !important; }
+  .col-mapa { display: none !important; }
+  .pilares > div { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; }
+  .pilares h4 { flex: 0 0 auto !important; }
+  .visual-hero { transform: none !important; margin-top: 8px !important; }
+  .visual-hero > div { zoom: 0.6; }
+  .visual-hero > div:nth-of-type(2) { display: none !important; }
+  nav { flex-wrap: wrap !important; row-gap: 6px !important; padding: 10px 10px 10px 16px !important; }
+  .nav-links { display: none !important; }
+  .nav-burger { display: inline-flex !important; }
+  .nav-tel { display: none !important; }
+  nav img { height: 28px !important; }
+}
+@media (max-width: 640px) {
+  .g-sectores { grid-template-columns: minmax(0,1fr) !important; }
+  section { padding-left: 20px !important; padding-right: 20px !important; padding-top: 56px !important; }
+  section#inicio { padding-top: 104px !important; }
+  nav { margin-left: 8px !important; margin-right: 8px !important; }
+  footer { margin-left: 8px !important; margin-right: 8px !important; padding-left: 20px !important; padding-right: 20px !important; }
+  h1 { font-size: clamp(24px, 6.4vw, 34px) !important; }
+  h2 { font-size: clamp(22px, 6.2vw, 30px) !important; }
+}
+</style>
+</helmet>
+
+<div style="position:fixed;inset:0;z-index:200;display:grid;place-items:center;overflow:hidden;background:radial-gradient(900px 480px at 8% -6%, rgba(158,217,238,0.55), rgba(158,217,238,0) 62%), radial-gradient(760px 520px at 98% 14%, rgba(0,80,144,0.16), rgba(0,80,144,0) 60%), #e9f1fa;animation:carga-subir 900ms cubic-bezier(.76,0,.24,1) 1250ms forwards" aria-hidden="true">
+  <div style="position:absolute;inset:-40px;background-image:url('img/hero-bg.png');background-size:cover;background-position:center;background-repeat:no-repeat;filter:blur(26px);opacity:0.4;pointer-events:none"></div>
+  <img src="logo-sermec.png" alt="SERMEC" style="position:relative;width:min(280px,56vw);height:auto;display:block;animation:carga-logo 520ms ease 860ms forwards">
+</div>
+
+<div style="max-width:none;margin:0 auto;padding:clamp(10px,1.6vw,22px)">
+<div style="background:radial-gradient(900px 480px at 8% -6%, rgba(158,217,238,0.42), rgba(158,217,238,0) 62%), radial-gradient(760px 520px at 98% 14%, rgba(0,80,144,0.13), rgba(0,80,144,0) 60%), radial-gradient(700px 600px at 45% 108%, rgba(0,153,204,0.10), rgba(0,153,204,0) 62%), #fafbfb;border-radius:clamp(22px,2.6vw,38px);overflow:hidden;box-shadow:10px 10px 28px rgba(18,16,15,0.07), -10px -10px 28px #ffffff">
+
+<div style="position:relative;overflow:hidden">
+<div class="fondo-hero" style="position:absolute;inset:-40px;background-image:url('img/hero-bg.png');background-size:cover;background-position:right center;background-repeat:no-repeat;filter:blur(20px);pointer-events:none;z-index:0"></div>
+<nav class="{{ claseNav }}" style="position:fixed;top:clamp(34px,4.4vw,56px);left:0;right:0;z-index:70;display:flex;align-items:center;flex-wrap:wrap;gap:12px clamp(16px,2.4vw,34px);margin:0 clamp(26px,4.4vw,64px);padding:8px 10px 8px clamp(16px,1.6vw,24px);border-radius:999px;background:linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.28) 38%, rgba(255,255,255,0.38) 70%, rgba(255,255,255,0.62) 100%), rgba(255,255,255,0.24);backdrop-filter:blur(26px) saturate(165%);border:1px solid rgba(255,255,255,0.9);box-shadow:0 18px 40px rgba(18,16,15,0.10), inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(255,255,255,0.5)">
+  <a href="#inicio" style="display:flex;align-items:center;margin-right:auto;line-height:0">
+    <img src="logo-sermec.png" alt="SERMEC" style="height:34px;width:auto;display:block">
+  </a>
+  <div class="nav-links" style="display:flex;align-items:center;flex-wrap:wrap;gap:10px clamp(14px,1.8vw,26px);font-size:15px;font-weight:500">
+    <a href="#inicio" style="padding-bottom:4px;border-bottom:1.5px solid #12100f">Inicio</a>
+    <a href="servicios.html">Servicios</a>
+    <a href="soluciones.html">Soluciones</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="contacto.html">Contacto</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;margin-left:auto">
+    <button type="button" class="{{ claseBurger }}" onClick="{{ alternarMenu }}" aria-label="Menú" style="display:none;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;border:1px solid rgba(255,255,255,0.75);background:rgba(255,255,255,0.5);backdrop-filter:blur(16px);box-shadow:4px 4px 12px rgba(18,16,15,0.06), -4px -4px 10px rgba(255,255,255,0.9);cursor:pointer;padding:0">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#12100f" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>
+    </button>
+    <a href="tel:+56934398711" class="nav-tel" style="display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 20px;border-radius:999px;font-size:14px;font-weight:500;white-space:nowrap;background:rgba(255,255,255,0.5);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.75);box-shadow:4px 4px 12px rgba(18,16,15,0.06), -4px -4px 10px rgba(255,255,255,0.9), inset 0 1px 0 rgba(255,255,255,0.85)" style-hover="box-shadow:inset 3px 3px 7px rgba(18,16,15,0.07), inset -3px -3px 7px #ffffff;color:#12100f">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#005090" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"></path></svg>
+      +56 9 3439 8711
+    </a>
+    <a href="contacto.html" style="display:inline-grid;place-items:center;width:44px;height:44px;border-radius:999px;background:#005090;color:#fff;flex:0 0 auto;box-shadow:0 6px 14px rgba(0,80,144,0.28)" style-hover="background:#003a68;color:#fff" aria-label="Solicitar cotización">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+    </a>
+  </div>
+</nav>
+<a href="{{ whatsapp }}" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" style="position:fixed;right:clamp(16px,2vw,28px);bottom:clamp(16px,2vw,28px);z-index:80;display:inline-grid;place-items:center;width:48px;height:48px;border-radius:999px;background:#25d366;box-shadow:0 10px 24px rgba(18,16,15,0.22);transition:transform 220ms cubic-bezier(.22,.9,.28,1), box-shadow 220ms ease" style-hover="transform:translateY(-3px) scale(1.05);box-shadow:0 14px 30px rgba(18,16,15,0.28)">
+  <svg width="24" height="24" viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><path d="M16.04 4C9.9 4 4.92 8.98 4.92 15.12c0 2.13.6 4.12 1.63 5.82L4.5 28l7.25-1.9a11.06 11.06 0 0 0 4.29.86h.01c6.14 0 11.12-4.98 11.12-11.12S22.18 4 16.04 4Zm0 20.3h-.01a9.2 9.2 0 0 1-4.68-1.28l-.34-.2-4.3 1.13 1.15-4.19-.22-.35a9.17 9.17 0 0 1-1.4-4.89c0-5.07 4.13-9.2 9.21-9.2 2.46 0 4.77.96 6.51 2.7a9.14 9.14 0 0 1 2.69 6.5c0 5.08-4.13 9.2-9.2 9.2Zm5.05-6.89c-.28-.14-1.63-.8-1.89-.9-.25-.09-.44-.13-.62.14s-.71.9-.87 1.09c-.16.18-.32.2-.6.07-.28-.14-1.17-.43-2.22-1.37-.82-.73-1.38-1.63-1.54-1.9-.16-.28-.02-.43.12-.57.13-.13.28-.32.42-.49.14-.16.19-.28.28-.46.09-.18.05-.35-.02-.49-.07-.14-.62-1.5-.85-2.05-.22-.53-.45-.46-.62-.47l-.53-.01c-.18 0-.48.07-.73.35-.25.28-.96.94-.96 2.29s.98 2.66 1.12 2.84c.14.18 1.93 2.94 4.67 4.12.65.28 1.16.45 1.56.58.66.21 1.25.18 1.72.11.53-.08 1.63-.66 1.86-1.31.23-.64.23-1.19.16-1.31-.07-.12-.25-.19-.53-.33Z"></path></svg>
+</a>
+
+<div class="{{ clasePanel }}" style="display:none;position:fixed;inset:0;z-index:90;flex-direction:column;padding:18px;background:linear-gradient(160deg, #eaf3fb 0%, #fafbfb 60%);backdrop-filter:blur(20px)">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <img src="logo-sermec.png" alt="SERMEC" style="height:28px;width:auto;display:block">
+    <button type="button" onClick="{{ cerrarMenu }}" aria-label="Cerrar menú" style="display:inline-grid;place-items:center;width:44px;height:44px;border-radius:999px;border:1px solid rgba(255,255,255,0.8);background:rgba(255,255,255,0.7);box-shadow:4px 4px 12px rgba(18,16,15,0.07);cursor:pointer;padding:0">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#12100f" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+    </button>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:4px;margin-top:26px">
+    <a href="#inicio" onClick="{{ cerrarMenu }}" style="font-family:'Michroma',sans-serif;font-size:20px;letter-spacing:-0.02em;padding:14px 4px;border-bottom:1px solid #e6e9ea">Inicio</a>
+    <a href="servicios.html" onClick="{{ cerrarMenu }}" style="font-family:'Michroma',sans-serif;font-size:20px;letter-spacing:-0.02em;padding:14px 4px;border-bottom:1px solid #e6e9ea">Servicios</a>
+    <a href="soluciones.html" onClick="{{ cerrarMenu }}" style="font-family:'Michroma',sans-serif;font-size:20px;letter-spacing:-0.02em;padding:14px 4px;border-bottom:1px solid #e6e9ea">Soluciones</a>
+    <a href="nosotros.html" onClick="{{ cerrarMenu }}" style="font-family:'Michroma',sans-serif;font-size:20px;letter-spacing:-0.02em;padding:14px 4px;border-bottom:1px solid #e6e9ea">Nosotros</a>
+    <a href="contacto.html" onClick="{{ cerrarMenu }}" style="font-family:'Michroma',sans-serif;font-size:20px;letter-spacing:-0.02em;padding:14px 4px;border-bottom:1px solid #e6e9ea">Contacto</a>
+  </div>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+    <a href="tel:+56934398711" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;height:52px;border-radius:999px;background:rgba(255,255,255,0.75);border:1px solid rgba(255,255,255,0.9);font-size:16px;font-weight:500;box-shadow:4px 4px 14px rgba(18,16,15,0.06)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#005090" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"></path></svg>
+      +56 9 3439 8711
+    </a>
+    <a href="contacto.html" onClick="{{ cerrarMenu }}" style="display:inline-flex;align-items:center;justify-content:center;height:54px;border-radius:999px;background:#005090;color:#fff;font-size:16px;font-weight:600;box-shadow:0 10px 22px rgba(0,80,144,0.28)">Solicitar cotización</a>
+  </div>
+</div>
+
+<section id="inicio" style="position:relative;z-index:1;padding:calc(clamp(44px,8vh,110px) + 86px) clamp(36px,7vw,132px) clamp(16px,2vw,28px);min-height:calc(100dvh - 150px);display:flex;flex-direction:column;justify-content:flex-start">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(24px,3vw,48px);align-items:center">
+    <div>
+      <p style="display:flex;align-items:center;gap:10px;font-size:15px;color:#5b6266;margin:0 0 clamp(14px,1.6vw,22px)">
+        <span style="width:26px;height:1px;background:#aab1b5;display:block"></span>
+        Refrigeración industrial en Chile
+      </p>
+      <h1 style="font-family:'Michroma',sans-serif;font-weight:400;font-size:clamp(22px,3.4vw,42px);line-height:1.16;letter-spacing:-0.03em;text-transform:uppercase;margin:0;display:flex;align-items:flex-start;gap:clamp(10px,1.4vw,20px)">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#005090" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;margin-top:0.35em" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+        <span>Servicio técnico, ingeniería y proyectos<span style="color:#0099cc"> .</span></span>
+      </h1>
+      <p style="font-size:clamp(16px,1.3vw,18px);line-height:1.55;color:#5b6266;max-width:46ch;margin:clamp(18px,2vw,26px) 0 0">Soluciones integrales en refrigeración y climatización para la industria nacional</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(22px,2.4vw,32px)">
+        <a href="contacto.html" style="display:inline-flex;align-items:center;gap:9px;height:50px;padding:0 26px;border-radius:999px;background:#9ed9ee;color:#12100f;font-size:15px;font-weight:600;box-shadow:4px 4px 11px rgba(18,16,15,0.08), -4px -4px 11px #ffffff" style-hover="background:#0099cc;color:#12100f">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4.5 13H12l-1 9 8.5-11H12l1-9z"></path></svg>
+          Hablar con un especialista
+        </a>
+        <a href="soluciones.html" style="display:inline-flex;align-items:center;gap:9px;height:50px;padding:0 26px;border-radius:999px;font-size:15px;font-weight:500;background:rgba(255,255,255,0.5);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.75);box-shadow:4px 4px 12px rgba(18,16,15,0.06), -4px -4px 10px rgba(255,255,255,0.9), inset 0 1px 0 rgba(255,255,255,0.85)" style-hover="box-shadow:inset 3px 3px 7px rgba(18,16,15,0.07), inset -3px -3px 7px #ffffff;color:#12100f">
+          Conocer nuestras soluciones
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#005090" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="visual-hero" style="position:relative;min-width:0;margin-top:clamp(-40px,-3vw,0px);transform:scale(0.84);transform-origin:right center">
+      <img src="img/hero-banner.png" alt="Técnico SERMEC en mantención de equipo de refrigeración industrial" style="width:100%;height:auto;display:block;border-radius:clamp(20px,2.2vw,30px)">
+      <div style="position:absolute;left:clamp(12px,2vw,26px);bottom:clamp(12px,2vw,26px);animation:flotar 6s ease-in-out infinite;background:linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.28) 38%, rgba(255,255,255,0.38) 70%, rgba(255,255,255,0.62) 100%), rgba(255,255,255,0.24);backdrop-filter:blur(26px) saturate(165%);border:1px solid rgba(255,255,255,0.9);border-radius:18px;padding:16px 20px;box-shadow:0 18px 40px rgba(18,16,15,0.18), 0 4px 10px rgba(0,80,144,0.10), inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(255,255,255,0.5), inset 0 0 22px rgba(255,255,255,0.45)">
+        <div style="position:absolute;inset:0;border-radius:18px;pointer-events:none;background:linear-gradient(115deg, rgba(217,237,247,0.22) 0%, rgba(0,153,204,0.18) 16%, rgba(158,217,238,0.24) 32%, rgba(0,80,144,0.16) 50%, rgba(158,217,238,0.24) 68%, rgba(0,153,204,0.18) 84%, rgba(217,237,247,0.22) 100%);background-size:200% 100%;background-repeat:repeat;animation:holo 12s linear infinite"></div><div style="position:absolute;inset:0;border-radius:18px;pointer-events:none;background:linear-gradient(160deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 35%, rgba(255,255,255,0) 65%, rgba(255,255,255,0.4) 100%)"></div>
+        <p style="font-family:'Michroma',sans-serif;font-size:13px;letter-spacing:-0.02em;margin:0">Cobertura nacional</p>
+        <p style="font-size:14px;color:#5b6266;margin:6px 0 0">Arica – Punta Arenas</p>
+      </div>
+      <div style="position:absolute;left:clamp(12px,2vw,26px);top:clamp(12px,2vw,26px);animation:flotar 7.5s ease-in-out infinite 0.8s;width:190px;max-width:52%;background:linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.28) 38%, rgba(255,255,255,0.38) 70%, rgba(255,255,255,0.62) 100%), rgba(255,255,255,0.24);backdrop-filter:blur(26px) saturate(165%);border:1px solid rgba(255,255,255,0.9);border-radius:14px;padding:10px;box-shadow:0 18px 40px rgba(18,16,15,0.18), 0 4px 10px rgba(0,80,144,0.10), inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(255,255,255,0.5), inset 0 0 22px rgba(255,255,255,0.45)">
+        <div style="position:absolute;inset:0;border-radius:14px;pointer-events:none;background:linear-gradient(115deg, rgba(217,237,247,0.22) 0%, rgba(0,153,204,0.18) 16%, rgba(158,217,238,0.24) 32%, rgba(0,80,144,0.16) 50%, rgba(158,217,238,0.24) 68%, rgba(0,153,204,0.18) 84%, rgba(217,237,247,0.22) 100%);background-size:200% 100%;background-repeat:repeat;animation:holo 12s linear infinite"></div><div style="position:absolute;inset:0;border-radius:14px;pointer-events:none;background:linear-gradient(160deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 35%, rgba(255,255,255,0) 65%, rgba(255,255,255,0.4) 100%)"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid #e6e9ea;border-radius:999px;padding:5px 11px">
+          <span style="font-family:'Michroma',sans-serif;font-size:9px;letter-spacing:-0.02em;text-transform:uppercase">Energía</span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#005090" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+        </div>
+        <div style="display:flex;align-items:stretch;gap:6px;margin-top:9px">
+          <div style="display:flex;flex-direction:column;justify-content:space-between;font-size:8px;color:#7c8489;height:54px">
+            <span>200</span><span>150</span><span>100</span><span>50</span><span>0</span>
+          </div>
+          <div style="flex:1;min-width:0;height:54px;border-bottom:1px solid #e6e9ea;background:repeating-linear-gradient(to top, transparent 0 12.5px, #e6e9ea 12.5px 13.5px)">
+            <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:1px;width:100%;height:100%">
+              <sc-for list="{{ barras }}" as="barra" hint-placeholder-count="24">
+                <span style="flex:0 0 auto;width:2px;display:block;background:#005090;height: {{ barra.alto }}"></span>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:4px;margin:6px 0 0 26px;font-size:8px;color:#7c8489;text-transform:uppercase">
+          <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
+        </div>
+      </div>
+      <div style="position:absolute;right:-28px;top:50%;margin-top:-59px;animation:flotar 5.5s ease-in-out infinite 0.4s;width:118px;max-width:36%;aspect-ratio:1 / 1;background:linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.28) 38%, rgba(255,255,255,0.38) 70%, rgba(255,255,255,0.62) 100%), rgba(255,255,255,0.24);backdrop-filter:blur(26px) saturate(165%);border:1px solid rgba(255,255,255,0.9);border-radius:999px;padding:2px;box-shadow:0 18px 40px rgba(18,16,15,0.18), 0 4px 10px rgba(0,80,144,0.10), inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(255,255,255,0.5), inset 0 0 22px rgba(255,255,255,0.45)">
+        <div style="position:absolute;inset:0;border-radius:999px;pointer-events:none;background:linear-gradient(115deg, rgba(217,237,247,0.22) 0%, rgba(0,153,204,0.18) 16%, rgba(158,217,238,0.24) 32%, rgba(0,80,144,0.16) 50%, rgba(158,217,238,0.24) 68%, rgba(0,153,204,0.18) 84%, rgba(217,237,247,0.22) 100%);background-size:200% 100%;background-repeat:repeat;animation:holo 12s linear infinite"></div><div style="position:absolute;inset:0;border-radius:999px;pointer-events:none;background:linear-gradient(160deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 35%, rgba(255,255,255,0) 65%, rgba(255,255,255,0.4) 100%)"></div>
+        <div style="position:relative;width:100%;aspect-ratio:1 / 1;display:grid;place-items:center">
+          <div style="position:absolute;inset:2px;background:repeating-conic-gradient(from 0deg, #12100f 0deg 1deg, rgba(0,0,0,0) 1deg 10deg);-webkit-mask-image:radial-gradient(circle, transparent 0 41%, #000 42% 50%, transparent 51%);mask-image:radial-gradient(circle, transparent 0 41%, #000 42% 50%, transparent 51%)"></div>
+          <div style="position:absolute;inset:7%;border:1px solid #12100f;border-radius:999px"></div>
+          <div style="position:relative;z-index:1;text-align:center">
+            <p style="font-size:10px;line-height:1.3;color:#5b6266;margin:0">2400k</p>
+            <p style="font-family: 'Michroma',sans-serif; font-size: 14px; letter-spacing: -0.04em; margin: 0; line-height: 1.05; color: #005090">75%</p>
+            <p style="font-size:10px;font-weight:700;line-height:1.3;color:#5b6266;margin:0;text-transform:uppercase;letter-spacing:0.04em">Cold</p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <sc-if value="{{ mostrarCifras }}" hint-placeholder-val="{{ true }}">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:12px;margin-top:auto;padding-top:clamp(10px,1.4vw,20px);margin-bottom:clamp(40px,8vh,96px)">
+    <sc-for list="{{ cifras }}" as="cifra" hint-placeholder-count="4">
+      <div style="display:flex;align-items:center;gap:16px;background:rgba(255,255,255,0.5);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.75);border-radius:999px;padding:12px 24px 12px 14px;box-shadow:4px 4px 12px rgba(18,16,15,0.06), -4px -4px 10px rgba(255,255,255,0.9), inset 0 1px 0 rgba(255,255,255,0.85)">
+        <span style="display:grid;place-items:center;width:52px;height:52px;border-radius:999px;background:#d9edf7;box-shadow:inset 3px 3px 6px rgba(18,16,15,0.08), inset -2px -2px 6px rgba(255,255,255,0.8);font-family:'Michroma',sans-serif;font-size:15px;letter-spacing:-0.03em;color:#005090;flex:0 0 auto">{{ cifra.valor }}</span>
+        <span style="font-size:15px;line-height:1.35;color:#5b6266">{{ cifra.texto }}</span>
+      </div>
+    </sc-for>
+  </div>
+  </sc-if>
+</section>
+</div>
+
+<sc-if value="{{ mostrarMarcas }}" hint-placeholder-val="{{ true }}">
+<section style="padding:clamp(34px,4vw,64px) clamp(36px,7vw,132px) 0">
+  <div style="display:flex;align-items:center;gap:16px;margin-bottom:22px">
+    <p style="font-size:14px;color:#5b6266;margin:0;white-space:nowrap">Tecnologías y marcas que integramos</p>
+    <span style="flex:1;height:1px;background:#e6e9ea;display:block"></span>
+  </div>
+  <div style="overflow:hidden;-webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent)">
+    <div style="display:flex;gap:10px;width:max-content;animation:marcas-marquee 38s linear infinite" style-hover="animation-play-state:paused">
+      <sc-for list="{{ marcasLoop }}" as="marca" hint-placeholder-count="14">
+        <div style="flex:0 0 auto;display:grid;place-items:center;padding:0 30px;background:rgba(255,255,255,0.4);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.7);border-radius:18px;height:80px;box-shadow:inset 3px 3px 7px rgba(18,16,15,0.05), inset -3px -3px 7px rgba(255,255,255,0.9)">
+          <span style="font-family:'Michroma',sans-serif;font-size:15px;letter-spacing:-0.02em;color:#005090;white-space:nowrap">{{ marca.nombre }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<section id="servicios" style="padding:clamp(40px,5vw,84px) clamp(36px,7vw,132px) 0">
+  <div style="display:flex;align-items:flex-end;flex-wrap:wrap;gap:18px 40px;padding-bottom:clamp(22px,2.4vw,34px);border-bottom:1px solid #e6e9ea">
+    <div style="flex:1 1 320px;min-width:0">
+      <p style="font-family:'Michroma',sans-serif;font-size:12px;letter-spacing:0.02em;color:#005090;margin:0 0 14px">01 / Servicios</p>
+      <h2 style="font-family:'Michroma',sans-serif;font-weight:400;font-size:clamp(19px,2.4vw,30px);line-height:1.2;letter-spacing:-0.03em;text-transform:uppercase;margin:0;max-width:18ch">Nuestras áreas de especialidad<span style="color:#0099cc"> .</span></h2>
+    </div>
+    <p style="flex:1 1 260px;font-size:16px;line-height:1.55;color:#5b6266;margin:0;max-width:42ch">Con especialistas propios y cobertura en terreno a nivel nacional.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(20px,2.4vw,40px);align-items:start;margin-top:clamp(22px,2.6vw,38px)">
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ areas }}" as="area" hint-placeholder-count="3">
+        <div onClick="{{ area.abrir }}" style="cursor:pointer;padding:clamp(18px,2vw,26px) 0;border-bottom:1px solid #e6e9ea">
+          <div style="display:flex;align-items:center;gap:16px">
+            <span style="display:grid;place-items:center;width:44px;height:44px;border-radius:999px;background: {{ area.tejaFondo }};flex:0 0 auto;box-shadow:inset 3px 3px 6px rgba(18,16,15,0.075), inset -2px -2px 6px rgba(255,255,255,0.8);transition:background 200ms">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{{ area.tejaTinta }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M3 12h18M6.3 6.3l11.4 11.4M17.7 6.3 6.3 17.7"></path></svg>
+            </span>
+            <h3 style="font-size:clamp(18px,1.6vw,22px);font-weight:500;line-height:1.25;margin:0;flex:1;min-width:0">{{ area.titulo }}</h3>
+            <span style="display:grid;place-items:center;width:34px;height:34px;border-radius:999px;flex:0 0 auto;background:rgba(255,255,255,0.5);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.75);box-shadow:3px 3px 9px rgba(18,16,15,0.06), inset 0 1px 0 rgba(255,255,255,0.85);transform: {{ area.giro }};transition:transform 220ms">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#005090" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+            </span>
+          </div>
+          <sc-if value="{{ area.activa }}" hint-placeholder-val="{{ false }}">
+            <p style="font-size:16px;line-height:1.55;color:#5b6266;margin:14px 0 0 60px;max-width:44ch">{{ area.detalle }}</p>
+            <a href="servicios.html" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;color:#005090;margin:14px 0 0 60px" style-hover="color:#0099cc">Ver más
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+            </a>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+    <div style="position:relative;border-radius:clamp(20px,2.2vw,30px);overflow:hidden;background:#eef0f1;aspect-ratio:16 / 10;box-shadow:0 18px 40px rgba(18,16,15,0.10), inset 0 1px 0 rgba(255,255,255,0.6)">
+      <sc-for list="{{ slides }}" as="slide" hint-placeholder-count="5">
+        <img src="{{ slide.src }}" alt="{{ slide.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity: {{ slide.opacidad }};transition:opacity 700ms ease, transform 900ms cubic-bezier(.22,.9,.28,1)" style-hover="transform:scale(1.04)">
+      </sc-for>
+      <div style="position:absolute;left:0;right:0;bottom:0;height:38%;pointer-events:none;background:linear-gradient(to top, rgba(0,32,58,0.5), rgba(0,32,58,0))"></div>
+      <div style="position:absolute;left:18px;bottom:16px;display:flex;align-items:center;gap:7px">
+        <sc-for list="{{ slides }}" as="slide" hint-placeholder-count="5">
+          <span onClick="{{ slide.ir }}" style="display:block;width: {{ slide.ancho }};height:6px;border-radius:999px;background: {{ slide.punto }};cursor:pointer;transition:width 300ms ease, background 300ms ease"></span>
+        </sc-for>
+      </div>
+      <span style="position:absolute;right:18px;bottom:14px;font-family:'Michroma',sans-serif;font-size:11px;letter-spacing:-0.02em;color:#fff">{{ slideActual }}</span>
+    </div>
+  </div>
+</section>
+
+<section id="sectores" style="padding:clamp(40px,5vw,84px) clamp(36px,7vw,132px) 0">
+  <div style="display:flex;align-items:flex-end;flex-wrap:wrap;gap:18px 40px;padding-bottom:clamp(22px,2.4vw,34px);border-bottom:1px solid #e6e9ea">
+    <div style="flex:1 1 320px;min-width:0">
+      <p style="font-family:'Michroma',sans-serif;font-size:12px;letter-spacing:0.02em;color:#005090;margin:0 0 14px">02 / Sectores</p>
+      <h2 style="font-family:'Michroma',sans-serif;font-weight:400;font-size:clamp(19px,2.4vw,30px);line-height:1.2;letter-spacing:-0.03em;text-transform:uppercase;margin:0;max-width:18ch">Sectores que atendemos<span style="color:#0099cc"> .</span></h2>
+    </div>
+    <p style="flex:1 1 300px;font-size:16px;line-height:1.55;color:#5b6266;margin:0;max-width:52ch">Industrias que requieren confiabilidad operacional, respuesta técnica y continuidad en sus sistemas de refrigeración y climatización.</p>
+  </div>
+  <div class="g-sectores" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.6vw,22px);margin-top:clamp(22px,2.6vw,38px)">
+    <sc-for list="{{ sectores }}" as="sector" hint-placeholder-count="6">
+      <div class="tarjeta-sector" style="display:flex;flex-direction:column;background:rgba(255,255,255,0.5);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.75);border-radius:clamp(18px,2vw,26px);padding:14px;box-shadow:6px 6px 16px rgba(18,16,15,0.07), -5px -5px 12px rgba(255,255,255,0.9), inset 0 1px 0 rgba(255,255,255,0.85);transition:transform 450ms cubic-bezier(.22,.9,.28,1), box-shadow 450ms ease, background 450ms ease" style-hover="transform:translateY(-6px);box-shadow:10px 18px 34px rgba(18,16,15,0.13), -6px -6px 16px rgba(255,255,255,0.95), inset 0 1px 0 rgba(255,255,255,0.95);background:rgba(255,255,255,0.68)">
+        <div style="border-radius:16px;overflow:hidden;background:#eef0f1;aspect-ratio:16 / 10;box-shadow:inset 4px 4px 10px rgba(18,16,15,0.075), inset -4px -4px 10px rgba(255,255,255,0.6)">
+          <img src="{{ sector.foto }}" alt="{{ sector.titulo }}" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 700ms cubic-bezier(.22,.9,.28,1), filter 600ms ease" style-hover="transform:scale(1.06);filter:saturate(1.08) contrast(1.03)">
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin:18px 6px 0">
+          <span style="width:7px;height:7px;border-radius:999px;background:#0099cc;display:block;flex:0 0 auto"></span>
+          <h3 style="font-size:18px;font-weight:600;line-height:1.25;margin:0">{{ sector.titulo }}</h3>
+        </div>
+        <p style="font-size:15px;line-height:1.5;color:#5b6266;margin:10px 6px 8px">{{ sector.detalle }}</p>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="cobertura" style="padding:clamp(40px,5vw,84px) clamp(36px,7vw,132px) 0">
+  <div class="g-cobertura" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,0.5fr);gap:clamp(28px,4vw,72px);align-items:center">
+    <div style="min-width:0">
+      <p style="font-family:'Michroma',sans-serif;font-size:12px;letter-spacing:0.02em;color:#005090;margin:0 0 14px">03 / Cobertura</p>
+      <h2 style="font-family:'Michroma',sans-serif;font-weight:400;font-size:clamp(19px,2.4vw,30px);line-height:1.2;letter-spacing:-0.03em;text-transform:uppercase;margin:0;max-width:20ch">Cobertura nacional<br>en dos zonas<span style="color: rgb(0, 153, 204);"> .</span></h2>
+      <p style="font-size:16px;line-height:1.55;color:#5b6266;margin:18px 0 0;max-width:52ch">Contamos con equipos técnicos propios en dos zonas del país, con capacidad de respuesta en terreno para faenas, plantas y proyectos industriales.</p>
+      <div style="margin-top:clamp(22px,2.6vw,34px);max-width:480px">
+    <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+      <div onMouseEnter="{{ hoverNorte }}" onMouseLeave="{{ salir }}" onClick="{{ verNorte }}" style="display:flex;align-items:center;gap:clamp(16px,2vw,28px);cursor:pointer;background:linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.28) 38%, rgba(255,255,255,0.38) 70%, rgba(255,255,255,0.62) 100%), rgba(255,255,255,0.24);backdrop-filter:blur(26px) saturate(165%);border:1px solid rgba(255,255,255,0.9);border-radius:999px;padding:clamp(14px,1.6vw,20px) clamp(24px,2.4vw,34px) clamp(14px,1.6vw,20px) clamp(14px,1.6vw,20px);box-shadow:0 18px 40px rgba(18,16,15,0.10), inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(255,255,255,0.5);outline: {{ bordeNorte }};outline-offset:-1px;transform: {{ escalaNorte }};transition:transform 240ms ease, outline-color 240ms ease">
+        <span style="display:grid;place-items:center;width:64px;height:64px;border-radius:999px;background: {{ fichaNorte }};box-shadow:inset 3px 3px 8px rgba(18,16,15,0.08), inset -3px -3px 7px rgba(255,255,255,0.8);font-family:'Michroma',sans-serif;font-size:15px;letter-spacing:-0.03em;color:#005090;flex:0 0 auto;transition:background 240ms ease">01</span>
+        <div style="min-width:0">
+          <h3 style="font-family:'Michroma',sans-serif;font-weight:400;font-size:clamp(14px,1.3vw,17px);line-height:1.3;letter-spacing:-0.03em;text-transform:uppercase;margin:0">Zona Centro Norte</h3>
+          <p style="font-size:15px;line-height:1.45;color:#5b6266;margin:8px 0 0">Arica – Curicó · Base operativa: Santiago</p>
+        </div>
+      </div>
+      <div onMouseEnter="{{ hoverSur }}" onMouseLeave="{{ salir }}" onClick="{{ verSur }}" style="display:flex;align-items:center;gap:clamp(16px,2vw,28px);cursor:pointer;background:linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.28) 38%, rgba(255,255,255,0.38) 70%, rgba(255,255,255,0.62) 100%), rgba(255,255,255,0.24);backdrop-filter:blur(26px) saturate(165%);border:1px solid rgba(255,255,255,0.9);border-radius:999px;padding:clamp(14px,1.6vw,20px) clamp(24px,2.4vw,34px) clamp(14px,1.6vw,20px) clamp(14px,1.6vw,20px);box-shadow:0 18px 40px rgba(18,16,15,0.10), inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(255,255,255,0.5);outline: {{ bordeSur }};outline-offset:-1px;transform: {{ escalaSur }};transition:transform 240ms ease, outline-color 240ms ease">
+        <span style="display:grid;place-items:center;width:64px;height:64px;border-radius:999px;background: {{ fichaSur }};box-shadow:inset 3px 3px 8px rgba(18,16,15,0.08), inset -3px -3px 7px rgba(255,255,255,0.8);font-family:'Michroma',sans-serif;font-size:15px;letter-spacing:-0.03em;color:#005090;flex:0 0 auto;transition:background 240ms ease">02</span>
+        <div style="min-width:0">
+          <h3 style="font-family:'Michroma',sans-serif;font-weight:400;font-size:clamp(14px,1.3vw,17px);line-height:1.3;letter-spacing:-0.03em;text-transform:uppercase;margin:0">Zona Centro Sur</h3>
+          <p style="font-size:15px;line-height:1.45;color:#5b6266;margin:8px 0 0">Curicó – Punta Arenas · Base operativa: Chillán</p>
+        </div>
+      </div>
+    </div>
+  </div>
+      <div style="display:flex;justify-content:flex-start;margin-top:clamp(18px,2vw,26px)">
+    <a href="contacto.html" style="display:inline-flex;align-items:center;gap:9px;height:50px;padding:0 26px;border-radius:999px;background:#005090;color:#fff;font-size:15px;font-weight:600;white-space:nowrap;box-shadow:4px 4px 11px rgba(18,16,15,0.12), -4px -4px 11px #ffffff" style-hover="background:#003a68;color:#fff">
+      Solicitar visita técnica
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+    </a>
+  </div>
+    </div>
+    <div class="col-mapa" style="justify-self:center;width:100%">
+    <div style="position:relative;width:100%;max-width:112px;margin:0 auto 0 0;justify-self:start">
+      <img src="img/glow.png" alt="" aria-hidden="true" style="position:absolute;left:50%;top:26%;transform:translate(-50%,-50%);width:330%;max-width:none;pointer-events:none;z-index:0;filter:blur(48px)">
+      <img src="img/glow.png" alt="" aria-hidden="true" style="position: absolute; left: -45px; top: 72%; transform: translate(-50%,-50%); width: 330%; max-width: none; pointer-events: none; z-index: 0; filter: blur(48px)">
+      <svg viewBox="4 2 148 810" style="position:relative;z-index:1;width:100%;height:auto;display:block;overflow:visible" role="img" aria-label="Mapa de Chile con zonas de cobertura">
+        <g onMouseEnter="{{ hoverNorte }}" onMouseLeave="{{ salir }}" onClick="{{ verNorte }}" fill="{{ colorNorte }}" style="cursor:pointer;transition:fill 260ms ease"><rect x="121.14" y="167.07" width="4.8" height="4.8"></rect><rect x="114.77" y="125.3" width="4.8" height="4.8"></rect><rect x="121.14" y="161.1" width="4.8" height="4.8"></rect><rect x="114.77" y="131.27" width="4.8" height="4.8"></rect><rect x="114.77" y="137.24" width="4.8" height="4.8"></rect><rect x="114.77" y="119.34" width="4.8" height="4.8"></rect><rect x="114.77" y="113.37" width="4.8" height="4.8"></rect><rect x="114.77" y="101.44" width="4.8" height="4.8"></rect><rect x="114.77" y="107.4" width="4.8" height="4.8"></rect><rect x="114.77" y="179" width="4.8" height="4.8"></rect><rect x="114.77" y="95.47" width="4.8" height="4.8"></rect><rect x="108.39" y="11.93" width="4.8" height="4.8"></rect><rect x="108.39" y="17.9" width="4.8" height="4.8"></rect><rect x="114.77" y="173.04" width="4.8" height="4.8"></rect><rect x="114.77" y="167.07" width="4.8" height="4.8"></rect><rect x="114.77" y="149.17" width="4.8" height="4.8"></rect><rect x="114.77" y="155.14" width="4.8" height="4.8"></rect><rect x="114.77" y="161.1" width="4.8" height="4.8"></rect><rect x="114.77" y="143.2" width="4.8" height="4.8"></rect><rect x="114.77" y="29.83" width="4.8" height="4.8"></rect><rect x="114.77" y="89.5" width="4.8" height="4.8"></rect><rect x="114.77" y="35.8" width="4.8" height="4.8"></rect><rect x="114.77" y="65.64" width="4.8" height="4.8"></rect><rect x="114.77" y="71.6" width="4.8" height="4.8"></rect><rect x="114.77" y="41.77" width="4.8" height="4.8"></rect><rect x="114.77" y="83.54" width="4.8" height="4.8"></rect><rect x="114.77" y="77.57" width="4.8" height="4.8"></rect><rect x="114.77" y="47.73" width="4.8" height="4.8"></rect><rect x="114.77" y="59.67" width="4.8" height="4.8"></rect><rect x="114.77" y="53.7" width="4.8" height="4.8"></rect><rect x="89.26" y="310.27" width="4.8" height="4.8"></rect><rect x="89.26" y="304.31" width="4.8" height="4.8"></rect><rect x="89.26" y="322.21" width="4.8" height="4.8"></rect><rect x="89.26" y="328.18" width="4.8" height="4.8"></rect><rect x="89.26" y="298.34" width="4.8" height="4.8"></rect><rect x="89.26" y="292.37" width="4.8" height="4.8"></rect><rect x="89.26" y="316.24" width="4.8" height="4.8"></rect><rect x="89.27" y="286.45" width="4.72" height="4.72"></rect><rect x="121.14" y="83.54" width="4.8" height="4.8"></rect><rect x="121.14" y="59.67" width="4.8" height="4.8"></rect><rect x="121.14" y="65.64" width="4.8" height="4.8"></rect><rect x="121.14" y="77.57" width="4.8" height="4.8"></rect><rect x="121.14" y="71.6" width="4.8" height="4.8"></rect><rect x="108.39" y="23.87" width="4.8" height="4.8"></rect><rect x="146.65" y="101.44" width="4.8" height="4.8"></rect><rect x="31.88" y="393.81" width="4.8" height="4.8"></rect><rect x="76.51" y="369.94" width="4.8" height="4.8"></rect><rect x="121.14" y="101.44" width="4.8" height="4.8"></rect><rect x="121.14" y="107.4" width="4.8" height="4.8"></rect><rect x="121.14" y="113.37" width="4.8" height="4.8"></rect><rect x="121.14" y="95.47" width="4.8" height="4.8"></rect><rect x="121.14" y="119.34" width="4.8" height="4.8"></rect><rect x="121.14" y="125.3" width="4.8" height="4.8"></rect><rect x="114.77" y="184.97" width="4.8" height="4.8"></rect><rect x="121.14" y="131.27" width="4.8" height="4.8"></rect><rect x="38.25" y="387.84" width="4.8" height="4.8"></rect><rect x="121.14" y="89.5" width="4.8" height="4.8"></rect><rect x="38.25" y="393.81" width="4.8" height="4.8"></rect><rect x="38.25" y="381.88" width="4.8" height="4.8"></rect><rect x="38.25" y="399.78" width="4.8" height="4.8"></rect><rect x="82.89" y="316.24" width="4.8" height="4.8"></rect><rect x="127.52" y="83.54" width="4.8" height="4.8"></rect><rect x="140.27" y="113.37" width="4.8" height="4.8"></rect><rect x="140.27" y="107.4" width="4.8" height="4.8"></rect><rect x="140.27" y="101.44" width="4.8" height="4.8"></rect><rect x="127.52" y="101.44" width="4.8" height="4.8"></rect><rect x="127.52" y="125.3" width="4.8" height="4.8"></rect><rect x="127.52" y="119.34" width="4.8" height="4.8"></rect><rect x="127.52" y="95.47" width="4.8" height="4.8"></rect><rect x="127.52" y="113.37" width="4.8" height="4.8"></rect><rect x="127.52" y="107.4" width="4.8" height="4.8"></rect><rect x="95.64" y="77.57" width="4.8" height="4.8"></rect><rect x="127.52" y="89.5" width="4.8" height="4.8"></rect><rect x="95.64" y="17.9" width="4.8" height="4.8"></rect><rect x="95.64" y="11.93" width="4.8" height="4.8"></rect><rect x="108.4" y="5.99" width="4.75" height="4.75"></rect><rect x="95.64" y="23.87" width="4.8" height="4.8"></rect><rect x="95.64" y="53.7" width="4.8" height="4.8"></rect><rect x="95.64" y="59.67" width="4.8" height="4.8"></rect><rect x="95.64" y="65.64" width="4.8" height="4.8"></rect><rect x="95.64" y="71.6" width="4.8" height="4.8"></rect><rect x="95.64" y="35.8" width="4.8" height="4.8"></rect><rect x="95.64" y="29.83" width="4.8" height="4.8"></rect><rect x="95.64" y="41.77" width="4.8" height="4.8"></rect><rect x="95.64" y="47.73" width="4.8" height="4.8"></rect><rect x="133.89" y="95.47" width="4.8" height="4.8"></rect><rect x="133.89" y="113.37" width="4.8" height="4.8"></rect><rect x="133.89" y="119.34" width="4.8" height="4.8"></rect><rect x="133.89" y="101.44" width="4.8" height="4.8"></rect><rect x="133.89" y="107.4" width="4.8" height="4.8"></rect><rect x="114.77" y="23.87" width="4.8" height="4.8"></rect><rect x="44.63" y="393.81" width="4.8" height="4.8"></rect><rect x="44.63" y="399.78" width="4.8" height="4.8"></rect><rect x="44.63" y="387.84" width="4.8" height="4.8"></rect><rect x="44.63" y="369.94" width="4.8" height="4.8"></rect><rect x="44.63" y="381.88" width="4.8" height="4.8"></rect><rect x="44.63" y="375.91" width="4.8" height="4.8"></rect><rect x="127.52" y="77.57" width="4.8" height="4.8"></rect><rect x="95.64" y="214.81" width="4.8" height="4.8"></rect><rect x="95.64" y="196.9" width="4.8" height="4.8"></rect><rect x="95.64" y="208.84" width="4.8" height="4.8"></rect><rect x="95.64" y="202.87" width="4.8" height="4.8"></rect><rect x="89.26" y="95.47" width="4.8" height="4.8"></rect><rect x="95.64" y="190.94" width="4.8" height="4.8"></rect><rect x="95.64" y="83.54" width="4.8" height="4.8"></rect><rect x="95.64" y="113.37" width="4.8" height="4.8"></rect><rect x="31.88" y="399.78" width="4.8" height="4.8"></rect><rect x="95.64" y="119.34" width="4.8" height="4.8"></rect><rect x="95.64" y="125.3" width="4.8" height="4.8"></rect><rect x="95.64" y="95.47" width="4.8" height="4.8"></rect><rect x="95.64" y="89.5" width="4.8" height="4.8"></rect><rect x="95.64" y="101.44" width="4.8" height="4.8"></rect><rect x="95.64" y="131.27" width="4.8" height="4.8"></rect><rect x="95.64" y="149.17" width="4.8" height="4.8"></rect><rect x="95.64" y="173.04" width="4.8" height="4.8"></rect><rect x="95.64" y="167.07" width="4.8" height="4.8"></rect><rect x="95.64" y="179" width="4.8" height="4.8"></rect><rect x="95.64" y="161.1" width="4.8" height="4.8"></rect><rect x="95.64" y="137.24" width="4.8" height="4.8"></rect><rect x="95.64" y="143.2" width="4.8" height="4.8"></rect><rect x="95.64" y="155.14" width="4.8" height="4.8"></rect><rect x="95.64" y="184.97" width="4.8" height="4.8"></rect><rect x="95.64" y="107.4" width="4.8" height="4.8"></rect><rect x="57.38" y="334.14" width="4.8" height="4.8"></rect><rect x="63.76" y="316.24" width="4.8" height="4.8"></rect><rect x="51.01" y="346.08" width="4.8" height="4.8"></rect><rect x="31.88" y="387.84" width="4.8" height="4.8"></rect><rect x="38.25" y="375.91" width="4.8" height="4.8"></rect><rect x="44.71" y="364.02" width="4.71" height="4.71"></rect><rect x="76.51" y="190.94" width="4.8" height="4.8"></rect><rect x="82.95" y="167.1" width="4.74" height="4.74"></rect><rect x="89.26" y="238.67" width="4.8" height="4.8"></rect><rect x="89.27" y="250.67" width="4.66" height="4.66"></rect><rect x="89.26" y="214.81" width="4.8" height="4.8"></rect><rect x="89.26" y="226.74" width="4.8" height="4.8"></rect><rect x="89.26" y="232.71" width="4.8" height="4.8"></rect><rect x="89.26" y="220.77" width="4.8" height="4.8"></rect><rect x="89.26" y="244.64" width="4.8" height="4.8"></rect><rect x="82.89" y="208.84" width="4.8" height="4.8"></rect><rect x="82.89" y="202.87" width="4.8" height="4.8"></rect><rect x="82.89" y="214.81" width="4.8" height="4.8"></rect><rect x="82.89" y="196.9" width="4.8" height="4.8"></rect><rect x="82.89" y="179" width="4.8" height="4.8"></rect><rect x="82.89" y="173.04" width="4.8" height="4.8"></rect><rect x="82.89" y="184.97" width="4.8" height="4.8"></rect><rect x="82.89" y="190.94" width="4.8" height="4.8"></rect><rect x="82.89" y="220.77" width="4.8" height="4.8"></rect><rect x="89.26" y="107.4" width="4.8" height="4.8"></rect><rect x="89.26" y="208.84" width="4.8" height="4.8"></rect><rect x="89.26" y="149.17" width="4.8" height="4.8"></rect><rect x="89.26" y="131.27" width="4.8" height="4.8"></rect><rect x="89.26" y="137.24" width="4.8" height="4.8"></rect><rect x="89.26" y="125.3" width="4.8" height="4.8"></rect><rect x="89.26" y="113.37" width="4.8" height="4.8"></rect><rect x="89.26" y="119.34" width="4.8" height="4.8"></rect><rect x="89.26" y="143.2" width="4.8" height="4.8"></rect><rect x="89.26" y="190.94" width="4.8" height="4.8"></rect><rect x="89.26" y="196.9" width="4.8" height="4.8"></rect><rect x="89.26" y="202.87" width="4.8" height="4.8"></rect><rect x="89.26" y="184.97" width="4.8" height="4.8"></rect><rect x="89.26" y="179" width="4.8" height="4.8"></rect><rect x="89.26" y="161.1" width="4.8" height="4.8"></rect><rect x="89.26" y="167.07" width="4.8" height="4.8"></rect><rect x="89.26" y="173.04" width="4.8" height="4.8"></rect><rect x="89.26" y="155.14" width="4.8" height="4.8"></rect><rect x="76.51" y="196.9" width="4.8" height="4.8"></rect><rect x="76.51" y="202.87" width="4.8" height="4.8"></rect><rect x="82.89" y="352.04" width="4.8" height="4.8"></rect><rect x="82.89" y="346.08" width="4.8" height="4.8"></rect><rect x="76.51" y="208.84" width="4.8" height="4.8"></rect><rect x="82.89" y="358.01" width="4.8" height="4.8"></rect><rect x="76.51" y="238.67" width="4.8" height="4.8"></rect><rect x="76.51" y="250.61" width="4.8" height="4.8"></rect><rect x="82.89" y="226.74" width="4.8" height="4.8"></rect><rect x="76.51" y="214.81" width="4.8" height="4.8"></rect><rect x="82.89" y="340.11" width="4.8" height="4.8"></rect><rect x="76.51" y="256.57" width="4.8" height="4.8"></rect><rect x="76.51" y="220.77" width="4.8" height="4.8"></rect><rect x="76.51" y="226.74" width="4.8" height="4.8"></rect><rect x="76.51" y="232.71" width="4.8" height="4.8"></rect><rect x="76.51" y="244.64" width="4.8" height="4.8"></rect><rect x="82.89" y="334.14" width="4.8" height="4.8"></rect><rect x="82.89" y="262.54" width="4.8" height="4.8"></rect><rect x="82.89" y="256.57" width="4.8" height="4.8"></rect><rect x="82.89" y="268.51" width="4.8" height="4.8"></rect><rect x="82.89" y="244.64" width="4.8" height="4.8"></rect><rect x="82.89" y="232.71" width="4.8" height="4.8"></rect><rect x="82.89" y="274.47" width="4.8" height="4.8"></rect><rect x="82.89" y="238.67" width="4.8" height="4.8"></rect><rect x="82.89" y="250.61" width="4.8" height="4.8"></rect><rect x="82.89" y="304.31" width="4.8" height="4.8"></rect><rect x="82.89" y="310.27" width="4.8" height="4.8"></rect><rect x="82.89" y="322.21" width="4.8" height="4.8"></rect><rect x="82.89" y="280.44" width="4.8" height="4.8"></rect><rect x="82.89" y="328.18" width="4.8" height="4.8"></rect><rect x="82.89" y="286.41" width="4.8" height="4.8"></rect><rect x="82.89" y="292.37" width="4.8" height="4.8"></rect><rect x="82.89" y="298.34" width="4.8" height="4.8"></rect><rect x="108.39" y="190.94" width="4.8" height="4.8"></rect><rect x="108.39" y="173.04" width="4.8" height="4.8"></rect><rect x="108.39" y="167.07" width="4.8" height="4.8"></rect><rect x="108.39" y="179" width="4.8" height="4.8"></rect><rect x="108.39" y="161.1" width="4.8" height="4.8"></rect><rect x="108.39" y="155.14" width="4.8" height="4.8"></rect><rect x="108.39" y="184.97" width="4.8" height="4.8"></rect><rect x="108.39" y="143.2" width="4.8" height="4.8"></rect><rect x="108.39" y="149.17" width="4.8" height="4.8"></rect><rect x="102.01" y="17.9" width="4.8" height="4.8"></rect><rect x="108.39" y="137.24" width="4.8" height="4.8"></rect><rect x="102.01" y="23.87" width="4.8" height="4.8"></rect><rect x="102.01" y="11.93" width="4.8" height="4.8"></rect><rect x="102.01" y="29.83" width="4.8" height="4.8"></rect><rect x="102.01" y="5.97" width="4.8" height="4.8"></rect><rect x="76.51" y="262.54" width="4.8" height="4.8"></rect><rect x="102.01" width="4.8" height="4.8"></rect><rect x="108.39" y="53.7" width="4.8" height="4.8"></rect><rect x="108.39" y="59.67" width="4.8" height="4.8"></rect><rect x="89.26" y="101.44" width="4.8" height="4.8"></rect><rect x="108.39" y="65.64" width="4.8" height="4.8"></rect><rect x="108.39" y="71.6" width="4.8" height="4.8"></rect><rect x="102.01" y="35.8" width="4.8" height="4.8"></rect><rect x="108.39" y="35.8" width="4.8" height="4.8"></rect><rect x="108.39" y="41.77" width="4.8" height="4.8"></rect><rect x="108.39" y="131.27" width="4.8" height="4.8"></rect><rect x="108.39" y="47.73" width="4.8" height="4.8"></rect><rect x="108.39" y="83.54" width="4.8" height="4.8"></rect><rect x="108.39" y="119.34" width="4.8" height="4.8"></rect><rect x="108.39" y="125.3" width="4.8" height="4.8"></rect><rect x="108.39" y="107.4" width="4.8" height="4.8"></rect><rect x="108.39" y="113.37" width="4.8" height="4.8"></rect><rect x="108.39" y="101.44" width="4.8" height="4.8"></rect><rect x="108.39" y="89.5" width="4.8" height="4.8"></rect><rect x="108.39" y="95.47" width="4.8" height="4.8"></rect><rect x="108.39" y="77.57" width="4.8" height="4.8"></rect><rect x="102.01" y="173.04" width="4.8" height="4.8"></rect><rect x="102.01" y="179" width="4.8" height="4.8"></rect><rect x="102.01" y="184.97" width="4.8" height="4.8"></rect><rect x="102.01" y="190.94" width="4.8" height="4.8"></rect><rect x="102.01" y="143.2" width="4.8" height="4.8"></rect><rect x="102.01" y="149.17" width="4.8" height="4.8"></rect><rect x="102.01" y="155.14" width="4.8" height="4.8"></rect><rect x="102.01" y="161.1" width="4.8" height="4.8"></rect><rect x="102.01" y="167.07" width="4.8" height="4.8"></rect><rect x="102.01" y="196.9" width="4.8" height="4.8"></rect><rect x="102.01" y="131.27" width="4.8" height="4.8"></rect><rect x="102.01" y="71.6" width="4.8" height="4.8"></rect><rect x="102.01" y="77.57" width="4.8" height="4.8"></rect><rect x="102.01" y="89.5" width="4.8" height="4.8"></rect><rect x="102.01" y="65.64" width="4.8" height="4.8"></rect><rect x="102.01" y="83.54" width="4.8" height="4.8"></rect><rect x="102.01" y="47.73" width="4.8" height="4.8"></rect><rect x="102.01" y="53.7" width="4.8" height="4.8"></rect><rect x="102.01" y="59.67" width="4.8" height="4.8"></rect><rect x="102.01" y="107.4" width="4.8" height="4.8"></rect><rect x="102.01" y="125.3" width="4.8" height="4.8"></rect><rect x="102.01" y="41.77" width="4.8" height="4.8"></rect><rect x="102.01" y="119.34" width="4.8" height="4.8"></rect><rect x="102.01" y="101.44" width="4.8" height="4.8"></rect><rect x="102.01" y="95.47" width="4.8" height="4.8"></rect><rect x="102.01" y="137.24" width="4.8" height="4.8"></rect><rect x="102.01" y="113.37" width="4.8" height="4.8"></rect><rect x="108.39" y="29.83" width="4.8" height="4.8"></rect><rect x="57.38" y="358.01" width="4.8" height="4.8"></rect><rect x="57.38" y="352.04" width="4.8" height="4.8"></rect><rect x="57.38" y="363.98" width="4.8" height="4.8"></rect><rect x="57.38" y="340.11" width="4.8" height="4.8"></rect><rect x="57.38" y="369.94" width="4.8" height="4.8"></rect><rect x="57.38" y="346.08" width="4.8" height="4.8"></rect><rect x="57.38" y="399.78" width="4.8" height="4.8"></rect><rect x="57.38" y="381.88" width="4.8" height="4.8"></rect><rect x="57.38" y="393.81" width="4.8" height="4.8"></rect><rect x="57.38" y="387.84" width="4.8" height="4.8"></rect><rect x="57.38" y="375.91" width="4.8" height="4.8"></rect><rect x="51.01" y="393.81" width="4.8" height="4.8"></rect><rect x="51.01" y="369.94" width="4.8" height="4.8"></rect><rect x="51.01" y="375.91" width="4.8" height="4.8"></rect><rect x="51.01" y="387.84" width="4.8" height="4.8"></rect><rect x="51.01" y="381.88" width="4.8" height="4.8"></rect><rect x="51.01" y="399.78" width="4.8" height="4.8"></rect><rect x="51.01" y="352.04" width="4.8" height="4.8"></rect><rect x="51.01" y="358.01" width="4.8" height="4.8"></rect><rect x="51.01" y="363.98" width="4.8" height="4.8"></rect><rect x="76.51" y="346.08" width="4.8" height="4.8"></rect><rect x="70.13" y="274.47" width="4.8" height="4.8"></rect><rect x="70.13" y="262.54" width="4.8" height="4.8"></rect><rect x="70.13" y="286.41" width="4.8" height="4.8"></rect><rect x="70.13" y="280.44" width="4.8" height="4.8"></rect><rect x="70.13" y="268.51" width="4.8" height="4.8"></rect><rect x="70.13" y="244.64" width="4.8" height="4.8"></rect><rect x="70.14" y="256.57" width="4.8" height="4.8"></rect><rect x="70.13" y="250.61" width="4.8" height="4.8"></rect><rect x="70.13" y="298.34" width="4.8" height="4.8"></rect><rect x="70.13" y="322.21" width="4.8" height="4.8"></rect><rect x="70.13" y="328.18" width="4.8" height="4.8"></rect><rect x="70.13" y="334.14" width="4.8" height="4.8"></rect><rect x="70.13" y="316.24" width="4.8" height="4.8"></rect><rect x="70.13" y="310.27" width="4.8" height="4.8"></rect><rect x="70.13" y="292.37" width="4.8" height="4.8"></rect><rect x="70.13" y="238.67" width="4.8" height="4.8"></rect><rect x="70.13" y="304.31" width="4.8" height="4.8"></rect><rect x="76.51" y="328.18" width="4.8" height="4.8"></rect><rect x="76.51" y="316.24" width="4.8" height="4.8"></rect><rect x="76.51" y="292.37" width="4.8" height="4.8"></rect><rect x="76.51" y="310.27" width="4.8" height="4.8"></rect><rect x="76.51" y="298.34" width="4.8" height="4.8"></rect><rect x="76.51" y="286.41" width="4.8" height="4.8"></rect><rect x="76.51" y="274.47" width="4.8" height="4.8"></rect><rect x="76.51" y="280.44" width="4.8" height="4.8"></rect><rect x="76.51" y="304.31" width="4.8" height="4.8"></rect><rect x="76.51" y="352.04" width="4.8" height="4.8"></rect><rect x="76.51" y="268.51" width="4.8" height="4.8"></rect><rect x="76.51" y="322.21" width="4.8" height="4.8"></rect><rect x="76.51" y="363.98" width="4.8" height="4.8"></rect><rect x="76.51" y="358.01" width="4.8" height="4.8"></rect><rect x="70.13" y="340.11" width="4.8" height="4.8"></rect><rect x="76.51" y="334.14" width="4.8" height="4.8"></rect><rect x="76.51" y="340.11" width="4.8" height="4.8"></rect><rect x="63.76" y="363.98" width="4.8" height="4.8"></rect><rect x="63.76" y="381.88" width="4.8" height="4.8"></rect><rect x="63.76" y="358.01" width="4.8" height="4.8"></rect><rect x="63.76" y="375.91" width="4.8" height="4.8"></rect><rect x="63.76" y="334.14" width="4.8" height="4.8"></rect><rect x="63.76" y="352.04" width="4.8" height="4.8"></rect><rect x="63.76" y="340.11" width="4.8" height="4.8"></rect><rect x="63.76" y="346.08" width="4.8" height="4.8"></rect><rect x="63.76" y="369.94" width="4.8" height="4.8"></rect><rect x="63.76" y="387.84" width="4.8" height="4.8"></rect><rect x="63.76" y="393.81" width="4.8" height="4.8"></rect><rect x="63.76" y="399.78" width="4.8" height="4.8"></rect><rect x="70.13" y="369.94" width="4.8" height="4.8"></rect><rect x="70.13" y="375.91" width="4.8" height="4.8"></rect><rect x="70.13" y="381.88" width="4.8" height="4.8"></rect><rect x="70.13" y="387.84" width="4.8" height="4.8"></rect><rect x="63.76" y="328.18" width="4.8" height="4.8"></rect><rect x="70.13" y="393.81" width="4.8" height="4.8"></rect><rect x="70.13" y="363.98" width="4.8" height="4.8"></rect><rect x="70.13" y="358.01" width="4.8" height="4.8"></rect><rect x="70.13" y="352.04" width="4.8" height="4.8"></rect><rect x="70.13" y="399.78" width="4.8" height="4.8"></rect><rect x="63.76" y="322.21" width="4.8" height="4.8"></rect><rect x="70.13" y="346.08" width="4.8" height="4.8"></rect></g>
+        <g transform="translate(0,406.5)" onMouseEnter="{{ hoverSur }}" onMouseLeave="{{ salir }}" onClick="{{ verSur }}" fill="{{ colorSur }}" style="cursor:pointer;transition:fill 260ms ease"><rect x="51.01" y="96.32" width="4.8" height="4.8"></rect><rect x="44.63" y="102.28" width="4.8" height="4.8"></rect><rect x="51.01" y="90.35" width="4.8" height="4.8"></rect><rect x="51.01" y="84.38" width="4.8" height="4.8"></rect><rect x="51.01" y="78.42" width="4.8" height="4.8"></rect><rect x="38.25" y="126.15" width="4.8" height="4.8"></rect><rect x="51.01" y="173.89" width="4.8" height="4.8"></rect><rect x="51.01" y="179.85" width="4.8" height="4.8"></rect><rect x="51.01" y="161.95" width="4.8" height="4.8"></rect><rect x="51.01" y="167.92" width="4.8" height="4.8"></rect><rect x="51.01" y="185.82" width="4.8" height="4.8"></rect><rect x="51.01" y="197.75" width="4.8" height="4.8"></rect><rect x="51.01" y="191.79" width="4.8" height="4.8"></rect><rect x="51.01" y="155.99" width="4.8" height="4.8"></rect><rect x="51.01" y="150.02" width="4.8" height="4.8"></rect><rect x="51.01" y="120.18" width="4.8" height="4.8"></rect><rect x="51.01" y="126.15" width="4.8" height="4.8"></rect><rect x="51.01" y="108.25" width="4.8" height="4.8"></rect><rect x="51.01" y="114.22" width="4.8" height="4.8"></rect><rect x="51.01" y="132.12" width="4.8" height="4.8"></rect><rect x="51.01" y="144.05" width="4.8" height="4.8"></rect><rect x="51.01" y="138.09" width="4.8" height="4.8"></rect><rect x="19.13" y="191.79" width="4.8" height="4.8"></rect><rect y="251.45" width="4.8" height="4.8"></rect><rect x="25.5" y="84.38" width="4.8" height="4.8"></rect><rect x="6.37" y="185.82" width="4.8" height="4.8"></rect><rect x="25.5" y="108.25" width="4.8" height="4.8"></rect><rect x="25.5" y="90.35" width="4.8" height="4.8"></rect><rect x="25.5" y="96.32" width="4.8" height="4.8"></rect><rect x="25.5" y="102.28" width="4.8" height="4.8"></rect><rect x="12.75" y="179.85" width="4.8" height="4.8"></rect><rect x="12.75" y="185.82" width="4.8" height="4.8"></rect><rect x="51.01" y="203.72" width="4.8" height="4.8"></rect><rect x="6.37" y="179.85" width="4.8" height="4.8"></rect><rect x="12.75" y="173.89" width="4.8" height="4.8"></rect><rect x="51.01" y="102.28" width="4.8" height="4.8"></rect><rect x="19.13" y="203.72" width="4.8" height="4.8"></rect><rect x="19.13" y="209.69" width="4.8" height="4.8"></rect><rect x="19.13" y="179.85" width="4.8" height="4.8"></rect><rect x="19.13" y="185.82" width="4.8" height="4.8"></rect><rect x="44.63" y="120.18" width="4.8" height="4.8"></rect><rect x="44.63" y="114.22" width="4.8" height="4.8"></rect><rect x="44.63" y="126.15" width="4.8" height="4.8"></rect><rect x="44.75" y="138.15" width="4.66" height="4.66"></rect><rect x="44.63" y="132.12" width="4.8" height="4.8"></rect><rect x="44.63" y="108.25" width="4.8" height="4.8"></rect><rect x="44.63" y="233.55" width="4.8" height="4.8"></rect><rect x="63.76" y="317.09" width="4.8" height="4.8"></rect><rect x="63.8" y="138.16" width="4.72" height="4.72"></rect><rect x="70.13" y="317.09" width="4.8" height="4.8"></rect><rect x="70.13" y="334.99" width="4.8" height="4.8"></rect><rect x="70.13" y="323.06" width="4.8" height="4.8"></rect><rect x="70.13" y="329.02" width="4.8" height="4.8"></rect><rect x="70.13" y="340.96" width="4.8" height="4.8"></rect><rect x="38.25" y="323.06" width="4.8" height="4.8"></rect><rect x="70.13" y="346.92" width="4.8" height="4.8"></rect><rect x="63.76" y="323.06" width="4.8" height="4.8"></rect><rect x="70.13" y="352.89" width="4.8" height="4.8"></rect><rect x="57.38" y="317.09" width="4.8" height="4.8"></rect><rect x="57.38" y="323.06" width="4.8" height="4.8"></rect><rect x="63.76" y="155.99" width="4.8" height="4.8"></rect><rect x="63.76" y="161.95" width="4.8" height="4.8"></rect><rect x="51.01" y="305.16" width="4.8" height="4.8"></rect><rect x="95.64" y="340.96" width="4.8" height="4.8"></rect><rect x="102.01" y="376.76" width="4.8" height="4.8"></rect><rect x="95.64" y="334.99" width="4.8" height="4.8"></rect><rect x="89.26" y="340.96" width="4.8" height="4.8"></rect><rect x="82.89" y="358.86" width="4.8" height="4.8"></rect><rect x="114.77" y="346.92" width="4.8" height="4.8"></rect><rect x="114.77" y="334.99" width="4.8" height="4.8"></rect><rect x="114.77" y="340.96" width="4.8" height="4.8"></rect><rect x="82.89" y="329.02" width="4.8" height="4.8"></rect><rect x="95.64" y="323.06" width="4.8" height="4.8"></rect><rect x="82.89" y="317.09" width="4.8" height="4.8"></rect><rect x="82.89" y="323.06" width="4.8" height="4.8"></rect><rect x="114.77" y="352.89" width="4.8" height="4.8"></rect><rect x="76.51" y="334.99" width="4.8" height="4.8"></rect><rect x="76.51" y="329.02" width="4.8" height="4.8"></rect><rect x="76.51" y="323.06" width="4.8" height="4.8"></rect><rect x="114.77" y="358.86" width="4.8" height="4.8"></rect><rect x="76.51" y="317.09" width="4.8" height="4.8"></rect><rect x="44.63" y="340.96" width="4.8" height="4.8"></rect><rect x="44.68" y="335.02" width="4.75" height="4.75"></rect><rect x="44.63" y="346.92" width="4.8" height="4.8"></rect><rect x="38.25" y="334.99" width="4.8" height="4.8"></rect><rect x="38.25" y="329.02" width="4.8" height="4.8"></rect><rect x="63.76" y="352.89" width="4.8" height="4.8"></rect><rect x="57.38" y="334.99" width="4.8" height="4.8"></rect><rect x="63.76" y="329.02" width="4.8" height="4.8"></rect><rect x="63.76" y="334.99" width="4.8" height="4.8"></rect><rect x="108.39" y="358.86" width="4.8" height="4.8"></rect><rect x="108.39" y="340.96" width="4.8" height="4.8"></rect><rect x="108.39" y="352.89" width="4.8" height="4.8"></rect><rect x="108.39" y="364.82" width="4.8" height="4.8"></rect><rect x="108.39" y="346.92" width="4.8" height="4.8"></rect><rect x="108.39" y="334.99" width="4.8" height="4.8"></rect><rect x="114.77" y="370.79" width="4.8" height="4.8"></rect><rect x="114.77" y="364.82" width="4.8" height="4.8"></rect><rect x="114.77" y="382.72" width="4.8" height="4.8"></rect><rect x="108.39" y="382.72" width="4.8" height="4.8"></rect><rect x="108.39" y="370.79" width="4.8" height="4.8"></rect><rect x="114.77" y="376.76" width="4.8" height="4.8"></rect><rect x="102.01" y="346.92" width="4.8" height="4.8"></rect><rect x="102.01" y="340.96" width="4.8" height="4.8"></rect><rect x="102.01" y="334.99" width="4.8" height="4.8"></rect><rect x="102.01" y="358.86" width="4.8" height="4.8"></rect><rect x="102.01" y="364.82" width="4.8" height="4.8"></rect><rect x="89.26" y="317.09" width="4.8" height="4.8"></rect><rect x="89.26" y="323.06" width="4.8" height="4.8"></rect><rect y="179.85" width="4.8" height="4.8"></rect><rect x="51.01" y="311.12" width="4.8" height="4.8"></rect><rect x="51.01" y="323.06" width="4.8" height="4.8"></rect><rect x="31.88" y="323.06" width="4.8" height="4.8"></rect><rect x="31.88" y="317.09" width="4.8" height="4.8"></rect><rect x="19.27" y="197.83" width="4.65" height="4.65"></rect><rect x="51.01" y="317.09" width="4.8" height="4.8"></rect><rect x="95.64" y="358.86" width="4.8" height="4.8"></rect><rect x="31.88" y="334.99" width="4.8" height="4.8"></rect><rect x="44.63" y="144.05" width="4.8" height="4.8"></rect><rect y="257.42" width="4.8" height="4.8"></rect><rect y="269.35" width="4.8" height="4.8"></rect><rect x="6.37" y="227.59" width="4.8" height="4.8"></rect><rect x="19.13" y="263.39" width="4.8" height="4.8"></rect><rect x="25.5" y="275.32" width="4.8" height="4.8"></rect><rect x="25.5" y="263.39" width="4.8" height="4.8"></rect><rect x="44.63" y="221.62" width="4.8" height="4.8"></rect><rect x="12.75" y="251.45" width="4.8" height="4.8"></rect><rect x="25.5" y="269.35" width="4.8" height="4.8"></rect><rect x="12.75" y="257.42" width="4.8" height="4.8"></rect><rect x="44.63" y="203.72" width="4.8" height="4.8"></rect><rect x="44.63" y="197.75" width="4.8" height="4.8"></rect><rect x="44.63" y="191.79" width="4.8" height="4.8"></rect><rect x="44.63" y="179.85" width="4.8" height="4.8"></rect><rect x="44.63" y="185.82" width="4.8" height="4.8"></rect><rect x="44.63" y="209.69" width="4.8" height="4.8"></rect><rect x="44.63" y="227.59" width="4.8" height="4.8"></rect><rect x="19.13" y="239.52" width="4.8" height="4.8"></rect><rect x="44.63" y="215.65" width="4.8" height="4.8"></rect><rect x="19.13" y="233.55" width="4.8" height="4.8"></rect><rect x="44.63" y="173.89" width="4.8" height="4.8"></rect><rect x="44.63" y="150.02" width="4.8" height="4.8"></rect><rect x="44.63" y="167.92" width="4.8" height="4.8"></rect><rect x="44.63" y="161.95" width="4.8" height="4.8"></rect><rect x="44.63" y="155.99" width="4.8" height="4.8"></rect><rect x="89.26" y="376.76" width="4.8" height="4.8"></rect><rect x="70.13" y="376.76" width="4.8" height="4.8"></rect><rect x="82.89" y="376.76" width="4.8" height="4.8"></rect><rect x="108.39" y="394.66" width="4.8" height="4.8"></rect><rect x="89.26" y="382.72" width="4.8" height="4.8"></rect><rect x="38.25" y="60.52" width="4.8" height="4.8"></rect><rect x="38.25" y="30.68" width="4.8" height="4.8"></rect><rect x="38.25" y="54.55" width="4.8" height="4.8"></rect><rect x="38.25" y="72.45" width="4.8" height="4.8"></rect><rect x="38.25" y="36.65" width="4.8" height="4.8"></rect><rect x="38.25" y="42.62" width="4.8" height="4.8"></rect><rect x="38.25" y="48.58" width="4.8" height="4.8"></rect><rect x="38.25" y="66.48" width="4.8" height="4.8"></rect><rect x="38.25" y="24.72" width="4.8" height="4.8"></rect><rect x="19.13" y="102.28" width="4.8" height="4.8"></rect><rect x="38.25" y="6.81" width="4.8" height="4.8"></rect><rect x="38.25" y="12.78" width="4.8" height="4.8"></rect><rect x="38.25" y="18.75" width="4.8" height="4.8"></rect><rect x="38.25" y=".85" width="4.8" height="4.8"></rect><rect x="31.88" y="305.16" width="4.8" height="4.8"></rect><rect x="38.25" y="305.16" width="4.8" height="4.8"></rect><rect x="31.88" y="221.62" width="4.8" height="4.8"></rect><rect x="38.25" y="197.75" width="4.8" height="4.8"></rect><rect x="44.63" y="287.25" width="4.8" height="4.8"></rect><rect x="38.25" y="239.52" width="4.8" height="4.8"></rect><rect x="38.25" y="150.02" width="4.8" height="4.8"></rect><rect x="38.25" y="167.92" width="4.8" height="4.8"></rect><rect x="38.25" y="155.99" width="4.8" height="4.8"></rect><rect x="38.25" y="173.89" width="4.8" height="4.8"></rect><rect x="38.25" y="161.95" width="4.8" height="4.8"></rect><rect x="38.25" y="191.79" width="4.8" height="4.8"></rect><rect x="38.25" y="179.85" width="4.8" height="4.8"></rect><rect x="38.25" y="185.82" width="4.8" height="4.8"></rect><rect x="31.88" y="167.92" width="4.8" height="4.8"></rect><rect x="12.75" y="293.22" width="4.8" height="4.8"></rect><rect x="6.37" y="251.45" width="4.8" height="4.8"></rect><rect x="31.88" y="311.12" width="4.8" height="4.8"></rect><rect x="44.63" y="323.06" width="4.8" height="4.8"></rect><rect x="6.37" y="239.52" width="4.8" height="4.8"></rect><rect x="25.5" y="209.69" width="4.8" height="4.8"></rect><rect x="25.5" y="185.82" width="4.8" height="4.8"></rect><rect x="6.37" y="245.49" width="4.8" height="4.8"></rect><rect x="25.5" y="293.22" width="4.8" height="4.8"></rect><rect x="25.5" y="287.25" width="4.8" height="4.8"></rect><rect x="19.13" y="275.32" width="4.8" height="4.8"></rect><rect x="25.5" y="197.75" width="4.8" height="4.8"></rect><rect x="44.63" y="293.22" width="4.8" height="4.8"></rect><rect x="44.63" y="299.19" width="4.8" height="4.8"></rect><rect x="25.5" y="191.79" width="4.8" height="4.8"></rect><rect x="12.75" y="281.29" width="4.8" height="4.8"></rect><rect x="25.5" y="203.72" width="4.8" height="4.8"></rect><rect x="25.5" y="233.55" width="4.8" height="4.8"></rect><rect x="25.5" y="239.52" width="4.8" height="4.8"></rect><rect x="25.5" y="251.45" width="4.8" height="4.8"></rect><rect x="25.5" y="245.49" width="4.8" height="4.8"></rect><rect x="25.5" y="227.59" width="4.8" height="4.8"></rect><rect x="25.5" y="257.42" width="4.8" height="4.8"></rect><rect x="19.13" y="245.49" width="4.8" height="4.8"></rect><rect x="31.88" y="293.22" width="4.8" height="4.8"></rect><rect x="19.13" y="227.59" width="4.8" height="4.8"></rect><rect x="38.25" y="293.22" width="4.8" height="4.8"></rect><rect x="38.25" y="299.19" width="4.8" height="4.8"></rect><rect x="31.88" y="251.45" width="4.8" height="4.8"></rect><rect x="31.88" y="233.55" width="4.8" height="4.8"></rect><rect x="31.88" y="227.59" width="4.8" height="4.8"></rect><rect x="31.88" y="245.49" width="4.8" height="4.8"></rect><rect x="31.88" y="239.52" width="4.8" height="4.8"></rect><rect x="38.25" y="221.62" width="4.8" height="4.8"></rect><rect x="38.25" y="227.59" width="4.8" height="4.8"></rect><rect x="38.25" y="215.65" width="4.8" height="4.8"></rect><rect x="38.25" y="287.25" width="4.8" height="4.8"></rect><rect x="38.25" y="209.69" width="4.8" height="4.8"></rect><rect x="38.25" y="233.55" width="4.8" height="4.8"></rect><rect x="31.88" y="299.19" width="4.8" height="4.8"></rect><rect x="38.25" y="203.72" width="4.8" height="4.8"></rect><rect x="31.88" y="215.65" width="4.8" height="4.8"></rect><rect x="31.88" y="287.25" width="4.8" height="4.8"></rect><rect x="31.88" y="281.29" width="4.8" height="4.8"></rect><rect x="31.88" y="185.82" width="4.8" height="4.8"></rect><rect x="31.88" y="173.89" width="4.8" height="4.8"></rect><rect x="31.88" y="179.85" width="4.8" height="4.8"></rect><rect x="31.88" y="191.79" width="4.8" height="4.8"></rect><rect x="31.88" y="203.72" width="4.8" height="4.8"></rect><rect x="31.88" y="197.75" width="4.8" height="4.8"></rect><rect x="31.88" y="209.69" width="4.8" height="4.8"></rect><rect x="140.27" y="388.69" width="4.8" height="4.8"></rect><rect x="95.66" y="364.83" width="4.76" height="4.76"></rect><rect x="95.64" y="376.76" width="4.8" height="4.8"></rect><rect x="102.01" y="382.72" width="4.8" height="4.8"></rect><rect x="102.01" y="388.69" width="4.8" height="4.8"></rect><rect x="102.01" y="394.66" width="4.8" height="4.8"></rect><rect x="133.89" y="388.69" width="4.8" height="4.8"></rect><rect x="51.01" y="72.45" width="4.8" height="4.8"></rect><rect x="31.88" y="66.48" width="4.8" height="4.8"></rect><rect x="44.63" y="66.48" width="4.8" height="4.8"></rect><rect x="31.88" y="60.52" width="4.8" height="4.8"></rect><rect x="31.88" y="72.45" width="4.8" height="4.8"></rect><rect x="31.88" y="48.58" width="4.8" height="4.8"></rect><rect x="44.71" y="72.46" width="4.65" height="4.65"></rect><rect x="31.88" y="42.62" width="4.8" height="4.8"></rect><rect x="31.88" y="54.55" width="4.8" height="4.8"></rect><rect x="76.52" y="341" width="4.72" height="4.72"></rect><rect x="25.5" y="66.48" width="4.8" height="4.8"></rect><rect x="44.63" y="60.52" width="4.8" height="4.8"></rect><rect x="44.63" y=".85" width="4.8" height="4.8"></rect><rect x="44.63" y="6.81" width="4.8" height="4.8"></rect><rect x="44.63" y="30.68" width="4.8" height="4.8"></rect><rect x="44.63" y="48.58" width="4.8" height="4.8"></rect><rect x="44.63" y="12.78" width="4.8" height="4.8"></rect><rect x="44.63" y="54.55" width="4.8" height="4.8"></rect><rect x="44.63" y="36.65" width="4.8" height="4.8"></rect><rect x="44.63" y="42.62" width="4.8" height="4.8"></rect><rect x="44.63" y="18.75" width="4.8" height="4.8"></rect><rect x="44.63" y="24.72" width="4.8" height="4.8"></rect><rect x="51.01" y="340.96" width="4.8" height="4.8"></rect><rect x="63.83" y="376.89" width="4.65" height="4.65"></rect><rect x="31.88" y="36.65" width="4.8" height="4.8"></rect><rect x="19.2" y="96.36" width="4.72" height="4.72"></rect><rect x="25.5" y="60.52" width="4.8" height="4.8"></rect><rect x="19.13" y="108.25" width="4.8" height="4.8"></rect><rect x="114.77" y="394.66" width="4.8" height="4.8"></rect><rect x="121.14" y="400.62" width="4.8" height="4.8"></rect><rect x="51.01" y="358.86" width="4.8" height="4.8"></rect><rect x="38.31" y="353" width="4.68" height="4.68"></rect><rect x="44.63" y="358.86" width="4.8" height="4.8"></rect><rect x="76.51" y="376.76" width="4.8" height="4.8"></rect><rect x="57.38" y="352.89" width="4.8" height="4.8"></rect><rect x="38.25" y="358.86" width="4.8" height="4.8"></rect><rect x="57.38" y="364.82" width="4.8" height="4.8"></rect><rect x="57.38" y="42.62" width="4.8" height="4.8"></rect><rect x="57.38" y="185.82" width="4.8" height="4.8"></rect><rect x="57.38" y="54.55" width="4.8" height="4.8"></rect><rect x="57.38" y="60.52" width="4.8" height="4.8"></rect><rect x="57.38" y="66.48" width="4.8" height="4.8"></rect><rect x="57.38" y="48.58" width="4.8" height="4.8"></rect><rect x="57.38" y="36.65" width="4.8" height="4.8"></rect><rect x="57.38" y="30.68" width="4.8" height="4.8"></rect><rect x="57.38" y="24.72" width="4.8" height="4.8"></rect><rect x="57.38" y="72.45" width="4.8" height="4.8"></rect><rect x="57.38" y="78.42" width="4.8" height="4.8"></rect><rect x="57.38" y="120.18" width="4.8" height="4.8"></rect><rect x="57.38" y="114.22" width="4.8" height="4.8"></rect><rect x="57.38" y=".85" width="4.8" height="4.8"></rect><rect x="57.38" y="18.75" width="4.8" height="4.8"></rect><rect x="57.38" y="126.15" width="4.8" height="4.8"></rect><rect x="57.38" y="6.81" width="4.8" height="4.8"></rect><rect x="57.38" y="12.78" width="4.8" height="4.8"></rect><rect x="51.01" y=".85" width="4.8" height="4.8"></rect><rect x="51.01" y="6.81" width="4.8" height="4.8"></rect><rect x="51.01" y="12.78" width="4.8" height="4.8"></rect><rect x="51.01" y="54.55" width="4.8" height="4.8"></rect><rect x="51.01" y="48.58" width="4.8" height="4.8"></rect><rect x="51.01" y="18.75" width="4.8" height="4.8"></rect><rect x="51.01" y="42.62" width="4.8" height="4.8"></rect><rect x="51.01" y="60.52" width="4.8" height="4.8"></rect><rect x="51.01" y="24.72" width="4.8" height="4.8"></rect><rect x="51.01" y="30.68" width="4.8" height="4.8"></rect><rect x="51.01" y="36.65" width="4.8" height="4.8"></rect><rect x="57.38" y="191.79" width="4.8" height="4.8"></rect><rect x="57.38" y="161.95" width="4.8" height="4.8"></rect><rect x="57.38" y="167.92" width="4.8" height="4.8"></rect><rect x="57.38" y="155.99" width="4.8" height="4.8"></rect><rect x="57.38" y="173.89" width="4.8" height="4.8"></rect><rect x="57.38" y="179.85" width="4.8" height="4.8"></rect><rect x="57.38" y="138.09" width="4.8" height="4.8"></rect><rect x="57.38" y="150.02" width="4.8" height="4.8"></rect><rect x="57.38" y="144.05" width="4.8" height="4.8"></rect><rect x="51.01" y="209.69" width="4.8" height="4.8"></rect><rect x="51.01" y="66.48" width="4.8" height="4.8"></rect><rect x="57.38" y="132.12" width="4.8" height="4.8"></rect><rect x="70.13" y="18.75" width="4.8" height="4.8"></rect><rect x="63.76" y="12.78" width="4.8" height="4.8"></rect><rect x="63.76" y="18.75" width="4.8" height="4.8"></rect><rect x="63.76" y="6.81" width="4.8" height="4.8"></rect><rect x="63.76" y="24.72" width="4.8" height="4.8"></rect><rect x="63.76" y=".85" width="4.8" height="4.8"></rect><rect x="70.13" y="6.81" width="4.8" height="4.8"></rect><rect x="70.13" y="12.78" width="4.8" height="4.8"></rect><rect x="70.13" y=".85" width="4.8" height="4.8"></rect></g>
+      </svg>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section id="nosotros" style="padding:clamp(40px,5vw,84px) clamp(36px,7vw,132px) 0">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(24px,3vw,52px);align-items:center">
+    <div style="border-radius:clamp(20px,2.2vw,30px);overflow:hidden;background:#eef0f1;aspect-ratio:5 / 4;box-shadow:inset 5px 5px 12px rgba(18,16,15,0.08), inset -5px -5px 12px rgba(255,255,255,0.6)">
+      <img src="img/nosotros.png" alt="Equipo técnico SERMEC en planta industrial" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 800ms cubic-bezier(.22,.9,.28,1)" style-hover="transform:scale(1.04)">
+    </div>
+    <div>
+      <p style="font-family:'Michroma',sans-serif;font-size:12px;letter-spacing:0.02em;color:#005090;margin:0 0 14px">04 / SERMEC</p>
+      <h2 style="font-family:'Michroma',sans-serif;font-weight:400;font-size:clamp(19px,2.4vw,30px);line-height:1.2;letter-spacing:-0.03em;text-transform:uppercase;margin:0">¿Quiénes somos?<span style="color:#0099cc"> .</span></h2>
+      <p style="font-size:clamp(16px,1.3vw,18px);line-height:1.55;color:#5b6266;max-width:48ch;margin:18px 0 0">Empresa chilena especializada en refrigeración industrial, HVAC, electricidad y automatización. Diseñamos, integramos y mantenemos sistemas para la industria nacional.</p>
+      <div class="pilares" style="display:flex;flex-direction:column;margin-top:clamp(22px,2.4vw,32px);border-top:1px solid #e6e9ea">
+        <div style="display:flex;align-items:baseline;gap:16px;padding:16px 0;border-bottom:1px solid #e6e9ea">
+          <h4 style="font-family:'Michroma',sans-serif;font-weight:400;font-size:13px;line-height:1.35;letter-spacing:-0.02em;text-transform:uppercase;margin:0;flex:0 0 clamp(120px,14vw,180px)">Conocimiento técnico</h4>
+          <p style="font-size:15px;line-height:1.5;color:#5b6266;margin:0;flex:1;min-width:0">Experiencia real en refrigeración, electricidad y automatización industrial.</p>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:16px;padding:16px 0;border-bottom:1px solid #e6e9ea">
+          <h4 style="font-family:'Michroma',sans-serif;font-weight:400;font-size:13px;line-height:1.35;letter-spacing:-0.02em;text-transform:uppercase;margin:0;flex:0 0 clamp(120px,14vw,180px)">Soluciones integrales</h4>
+          <p style="font-size:15px;line-height:1.5;color:#5b6266;margin:0;flex:1;min-width:0">Ingeniería, equipos y servicio bajo un solo equipo.</p>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:16px;padding:16px 0;border-bottom:1px solid #e6e9ea">
+          <h4 style="font-family:'Michroma',sans-serif;font-weight:400;font-size:13px;line-height:1.35;letter-spacing:-0.02em;text-transform:uppercase;margin:0;flex:0 0 clamp(120px,14vw,180px)">Capacidad de respuesta</h4>
+          <p style="font-size:15px;line-height:1.5;color:#5b6266;margin:0;flex:1;min-width:0">Atención directa y presencia en terreno.</p>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:16px;padding:16px 0;border-bottom:1px solid #e6e9ea">
+          <h4 style="font-family:'Michroma',sans-serif;font-weight:400;font-size:13px;line-height:1.35;letter-spacing:-0.02em;text-transform:uppercase;margin:0;flex:0 0 clamp(120px,14vw,180px)">Confiabilidad</h4>
+          <p style="font-size:15px;line-height:1.5;color:#5b6266;margin:0;flex:1;min-width:0">Procedimientos claros y trazabilidad técnica.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" style="padding:clamp(40px,5vw,84px) clamp(36px,7vw,132px) 0">
+  <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:clamp(22px,3vw,48px);background:linear-gradient(135deg, rgba(0,80,144,0.55), rgba(0,80,144,0.35)), url('img/cta-bg.png') center/cover no-repeat, #005090;border:1px solid rgba(255,255,255,0.22);border-radius:clamp(22px,2.6vw,38px);padding:clamp(30px,4vw,60px) clamp(24px,3.4vw,54px);box-shadow:8px 8px 22px rgba(18,16,15,0.12), -8px -8px 22px #ffffff, inset 0 1px 0 rgba(255,255,255,0.25)">
+    <div style="flex:1 1 340px;min-width:0">
+      <h2 style="font-family:'Michroma',sans-serif;font-weight:400;font-size:clamp(19px,2.4vw,30px);line-height:1.2;letter-spacing:-0.03em;text-transform:uppercase;margin:0;color:#fff;max-width:20ch">¿Tienes un desafío? Conversemos<span style="color:#9ed9ee"> .</span></h2>
+      <p style="font-size:clamp(16px,1.3vw,18px);line-height:1.55;color:rgba(255,255,255,0.85);max-width:44ch;margin:16px 0 0">Cuéntanos tu requerimiento y te respondemos a la brevedad.</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      <a href="{{ whatsapp }}" style="display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 26px;border-radius:999px;background:#9ed9ee;color:#12100f;font-size:15px;font-weight:600;box-shadow:4px 4px 11px rgba(0,32,58,0.28), -4px -4px 10px rgba(255,255,255,0.14)" style-hover="background:#ffffff;color:#12100f">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>
+        Escríbenos por WhatsApp
+      </a>
+      <a href="contacto.html" style="display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 26px;border-radius:999px;color:#fff;font-size:15px;font-weight:500;background:rgba(255,255,255,0.14);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.35);box-shadow:inset 0 1px 0 rgba(255,255,255,0.3)" style-hover="background:rgba(255,255,255,0.14);color:#fff">
+        Solicitar cotización
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer style="margin:clamp(32px,4vw,60px) clamp(16px,2.8vw,42px) clamp(24px,2.6vw,38px);padding:clamp(22px,2.6vw,34px) clamp(24px,3vw,44px);border-radius:clamp(16px,1.8vw,26px);background:linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.28) 38%, rgba(255,255,255,0.38) 70%, rgba(255,255,255,0.62) 100%), rgba(255,255,255,0.24);backdrop-filter:blur(26px) saturate(165%);border:1px solid rgba(255,255,255,0.9);box-shadow:0 18px 40px rgba(18,16,15,0.10), inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(255,255,255,0.5)">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:clamp(24px,3vw,52px)">
+    <div>
+      <img src="logo-sermec.png" alt="SERMEC" style="height:44px;width:auto;display:block;margin:0 0 16px">
+      <p style="font-size:15px;line-height:1.55;color:#5b6266;margin:0;max-width:30ch">Av. Pdte. Jorge Alessandri 9243, Of. 20, San Bernardo</p>
+      <p style="font-size:15px;line-height:1.55;margin:10px 0 0"><a href="mailto:contacto@sermecrefrigeracion.cl">contacto@sermecrefrigeracion.cl</a></p>
+    </div>
+    <div>
+      <p style="font-family:'Michroma',sans-serif;font-size:12px;letter-spacing:0.02em;color:#005090;margin:0 0 16px">Navegación</p>
+      <div style="display:flex;flex-direction:column;gap:11px;font-size:15px">
+        <a href="servicios.html">Servicios</a>
+        <a href="soluciones.html">Soluciones</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+    </div>
+    <div>
+      <p style="font-family:'Michroma',sans-serif;font-size:12px;letter-spacing:0.02em;color:#005090;margin:0 0 16px">Contáctanos</p>
+      <div style="display:flex;flex-direction:column;gap:11px;font-size:15px">
+        <a href="https://www.linkedin.com" style="display:inline-flex;align-items:center;gap:9px">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          LinkedIn
+        </a>
+        <a href="tel:+56934398711">+56 9 3439 8711</a>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;margin-top:clamp(26px,3vw,42px);padding-top:20px;border-top:1px solid #e6e9ea;font-size:14px;color:#7c8489">
+    <span>© 2026 SERMEC Refrigeración Industrial SPA. Todos los derechos reservados.</span>
+    <span>Desarrollado por Delta Digital</span>
+  </div>
+</footer>
+
+</div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;mostrarCifras&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Secciones&quot;},&quot;mostrarMarcas&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Secciones&quot;},&quot;whatsappUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://wa.me/56934398711&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;}}">
+class Component extends DCLogic {
+  state = { area: 0, zona: null, slide: 0, menu: false, fija: false };
+  alternarMenu = () => this.setState(s => ({ menu: !s.menu }));
+  cerrarMenu = () => this.setState({ menu: false });
+  galerias = [
+    { prefijo: 'elec', total: 4, alt: 'Tableros eléctricos y sistemas de control SERMEC' },
+    { prefijo: 'hvac', total: 5, alt: 'Instalación de equipos de climatización SERMEC' },
+    { prefijo: 'ing', total: 5, alt: 'Proyectos electromecánicos SERMEC' }
+  ];
+  componentDidMount() {
+    this.onScroll = () => {
+      const fija = (window.scrollY || document.documentElement.scrollTop || 0) > 40;
+      if (fija !== this.state.fija) this.setState({ fija });
+    };
+    this.onScroll();
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.timer = setInterval(() => this.setState(s => ({
+      slide: (s.slide + 1) % (this.galerias[s.area] || this.galerias[0]).total
+    })), 4200);
+    this.intentos = 0;
+    const arrancar = () => {
+      const listas = document.querySelectorAll('section');
+      if (listas.length < 4 && this.intentos++ < 40) { setTimeout(arrancar, 150); return; }
+      this.montarReveal();
+    };
+    setTimeout(arrancar, 120);
+  }
+  montarReveal() {
+    if (this.revealListo) return;
+    this.revealListo = true;
+    const bloques = Array.from(document.querySelectorAll('section, footer'));
+    if (!('IntersectionObserver' in window) || !bloques.length) return;
+    const objetivos = [];
+    bloques.forEach((bloque, i) => {
+      if (i === 0) return;
+      const hijos = Array.from(bloque.children);
+      const piezas = hijos.length > 1 ? hijos : [bloque];
+      piezas.forEach((el, j) => {
+        el.classList.add('rv');
+        el.dataset.rvDelay = String(Math.min(j, 6) * 110);
+        objetivos.push(el);
+      });
+    });
+    this.io = new IntersectionObserver((entradas) => {
+      entradas.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        el.style.animationDelay = (el.dataset.rvDelay || 0) + 'ms';
+        el.classList.remove('rv');
+        el.classList.add('rv-on');
+        this.io.unobserve(el);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.06 });
+    objetivos.forEach(el => this.io.observe(el));
+  }
+  componentWillUnmount() { if (this.onScroll) window.removeEventListener('scroll', this.onScroll); clearInterval(this.timer); if (this.io) this.io.disconnect(); }
+  irArea(i) { this.setState({ area: i, slide: 0 }); }
+  setZona(z) { this.setState({ zona: z }); }
+  renderVals() {
+    const base = [
+      { titulo: 'Electricidad y Automatización', detalle: 'Tableros eléctricos, PLC, HMI e integración de sistemas de control.' },
+      { titulo: 'HVAC', detalle: 'Climatización y ventilación para aplicaciones industriales y comerciales.' },
+      { titulo: 'Ingeniería y Proyectos', detalle: 'Diseño, desarrollo y ejecución de proyectos electromecánicos.' }
+    ];
+    const areas = base.map((a, i) => {
+      const activa = i === this.state.area;
+      return {
+        ...a,
+        activa,
+        tejaFondo: activa ? '#9ed9ee' : '#eef0f1',
+        tejaTinta: '#005090',
+        giro: activa ? 'rotate(180deg)' : 'rotate(0deg)',
+        abrir: () => this.irArea(i)
+      };
+    });
+    const fotos = {
+      'v6-sector-agro': 'img/sector-agro.png',
+      'v6-sector-salmones': 'img/sector-salmones.png',
+      'v6-sector-frigorificos': 'img/sector-frigorificos.png',
+      'v6-sector-distribucion': 'img/sector-distribucion.png',
+      'v6-sector-bebidas': 'img/sector-bebidas.png',
+      'v6-sector-petroquimica': 'img/sector-petroquimica.png'
+    };
+    const sectoresBase = [
+      { id: 'v6-sector-agro', titulo: 'Agroindustria', detalle: 'Plantas de procesamiento, packing y cadenas de frío para productos agrícolas' },
+      { id: 'v6-sector-salmones', titulo: 'Salmones', detalle: 'Instalaciones para la industria acuícola, plantas de proceso y frío productivo' },
+      { id: 'v6-sector-frigorificos', titulo: 'Frigoríficos', detalle: 'Cámaras, túneles de congelado y sistemas de conservación a gran escala' },
+      { id: 'v6-sector-distribucion', titulo: 'Centros de distribución', detalle: 'Logística de frío para retail, food service y operadores logísticos' },
+      { id: 'v6-sector-bebidas', titulo: 'Bebidas y lácteos', detalle: 'Plantas de producción con requerimientos de temperatura controlada' },
+      { id: 'v6-sector-petroquimica', titulo: 'Petroquímica', detalle: 'Instalaciones industriales con requerimientos de refrigeración y climatización de proceso' }
+    ];
+    const sectores = sectoresBase.map(s => ({ ...s, foto: fotos[s.id] }));
+    const alturas = [42, 58, 34, 66, 88, 52, 74, 96, 40, 62, 30, 56, 78, 44, 70, 92, 36, 60, 84, 48, 68, 38, 80, 54];
+    const gal = this.galerias[this.state.area] || this.galerias[0];
+    const slides = Array.from({ length: gal.total }, (_, i) => ({
+      src: 'img/' + gal.prefijo + '-' + (i + 1) + '.jpeg',
+      alt: gal.alt,
+      opacidad: i === this.state.slide ? 1 : 0,
+      ancho: i === this.state.slide ? '26px' : '6px',
+      punto: i === this.state.slide ? '#ffffff' : 'rgba(255,255,255,0.5)',
+      ir: () => this.setState({ slide: i })
+    }));
+    const z = this.state.zona;
+    const zonaVals = {
+      hoverNorte: () => this.setZona('norte'),
+      hoverSur: () => this.setZona('sur'),
+      salir: () => this.setZona(null),
+      verNorte: () => this.setZona('norte'),
+      verSur: () => this.setZona('sur'),
+      colorNorte: z === 'norte' ? '#005090' : (z === 'sur' ? '#c9d6de' : '#9fb6c6'),
+      colorSur: z === 'sur' ? '#0099cc' : (z === 'norte' ? '#c9d6de' : '#9fb6c6'),
+      bordeNorte: z === 'norte' ? '1.5px solid #005090' : '1.5px solid transparent',
+      bordeSur: z === 'sur' ? '1.5px solid #0099cc' : '1.5px solid transparent',
+      escalaNorte: z === 'norte' ? 'translateX(6px)' : 'translateX(0)',
+      escalaSur: z === 'sur' ? 'translateX(6px)' : 'translateX(0)',
+      fichaNorte: z === 'norte' ? '#9ed9ee' : '#d9edf7',
+      fichaSur: z === 'sur' ? '#9ed9ee' : '#d9edf7'
+    };
+    return {
+      ...zonaVals,
+      alternarMenu: this.alternarMenu,
+      cerrarMenu: this.cerrarMenu,
+      clasePanel: this.state.menu ? 'nav-panel abierto' : 'nav-panel',
+      claseBurger: this.state.menu ? 'nav-burger abierto' : 'nav-burger',
+      slides,
+      slideActual: (this.state.slide + 1) + ' / ' + gal.total,
+      areas,
+      sectores,
+      barras: alturas.map(a => ({ alto: a + '%' })),
+      linea: alturas.map((a, i) => (i * 200 / (alturas.length - 1)).toFixed(1) + ',' + (74 - a * 0.74).toFixed(1)).join(' '),
+      lineaArea: '0,74 ' + alturas.map((a, i) => (i * 200 / (alturas.length - 1)).toFixed(1) + ',' + (74 - a * 0.74).toFixed(1)).join(' ') + ' 200,74',
+      cifras: [
+        { valor: '4', texto: 'años en el mercado' },
+        { valor: '4', texto: 'áreas de especialidad' },
+        { valor: '2', texto: 'zonas de cobertura nacional' },
+        { valor: '+65', texto: 'clientes' }
+      ],
+      marcasLoop: (() => {
+        const nombres = ['JZ Electronic', 'CIMAC', 'POWERINC', 'Nordfrost', 'Termax', 'Andina Control', 'Vaporex', 'KELVEN', 'Sigma HVAC', 'Frigoline'];
+        return Array.from({ length: 20 }, (_, i) => ({ id: 'v6-marca-' + ((i % 10) + 1), nombre: nombres[i % nombres.length] }));
+      })(),
+      mostrarMarcas: this.props.mostrarMarcas ?? true,
+      mostrarCifras: this.props.mostrarCifras ?? true,
+      claseNav: this.state.fija ? 'nav-fija' : '',
+      whatsapp: this.props.whatsappUrl ?? 'https://wa.me/56934398711'
+    };
+  }
+}
+
+</script>
+</body>
+</html>
