@@ -209,9 +209,9 @@ a:hover { color: #005090; }
   </div>
   <div style="overflow:hidden;-webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent)">
     <div style="display:flex;gap:10px;width:max-content;animation:marcas-marquee 38s linear infinite" style-hover="animation-play-state:paused">
-      <sc-for list="{{ marcasLoop }}" as="marca" hint-placeholder-count="14">
+      <sc-for list="{{ marcasLoop }}" as="marca" hint-placeholder-count="11">
         <div style="flex:0 0 auto;display:grid;place-items:center;padding:0 30px;background:rgba(255,255,255,0.4);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.7);border-radius:18px;height:80px;box-shadow:inset 3px 3px 7px rgba(18,16,15,0.05), inset -3px -3px 7px rgba(255,255,255,0.9)">
-          <span style="font-family:'Michroma',sans-serif;font-size:15px;letter-spacing:-0.02em;color:#005090;white-space:nowrap">{{ marca.nombre }}</span>
+          <img src="{{ marca.logo }}" alt="{{ marca.nombre }}" loading="lazy" style="display:block;height:44px;width:auto;max-width:150px;object-fit:contain"></img>
         </div>
       </sc-for>
     </div>
@@ -426,9 +426,9 @@ class Component extends DCLogic {
   alternarMenu = () => this.setState(s => ({ menu: !s.menu }));
   cerrarMenu = () => this.setState({ menu: false });
   galerias = [
-    { fotos: ['img/elec-3.jpeg'], total: 1, alt: 'Servicio técnico en sala de máquinas SERMEC' },
-    { fotos: ['img/home-area-1.jpeg', 'img/elec-2.jpeg', 'img/elec-3.jpeg', 'img/elec-4.jpeg'], total: 4, alt: 'Tableros eléctricos y sistemas de control SERMEC' },
-    { fotos: ['img/home-area-2.jpg', 'img/hvac-2.jpeg', 'img/hvac-3.jpeg', 'img/hvac-4.jpeg', 'img/hvac-5.jpeg'], total: 5, alt: 'Instalación de equipos de climatización SERMEC' },
+    { fotos: ['img/home-area-1.jpeg', 'img/home-area-2.jpg', 'img/elec-3.jpeg'], total: 3, alt: 'Servicio técnico en sala de máquinas SERMEC' },
+    { fotos: ['img/elec-1.jpeg', 'img/elec-2.jpeg', 'img/elec-3.jpeg', 'img/elec-4.jpeg'], total: 4, alt: 'Tableros eléctricos y sistemas de control SERMEC' },
+    { fotos: ['img/hvac-1.jpeg', 'img/hvac-2.jpeg', 'img/hvac-3.jpeg', 'img/hvac-4.jpeg', 'img/hvac-5.jpeg'], total: 5, alt: 'Instalación de equipos de climatización SERMEC' },
     { prefijo: 'ing', total: 5, alt: 'Proyectos electromecánicos SERMEC' }
   ];
   componentDidMount() {
@@ -561,8 +561,8 @@ class Component extends DCLogic {
         { valor: '+65', texto: 'clientes' }
       ],
       marcasLoop: (() => {
-        const nombres = ['JZ Electronic', 'CIMAC', 'POWERINC', 'Nordfrost', 'Termax', 'Andina Control', 'Vaporex', 'KELVEN', 'Sigma HVAC', 'Frigoline'];
-        return Array.from({ length: 20 }, (_, i) => ({ id: 'v6-marca-' + ((i % 10) + 1), nombre: nombres[i % nombres.length] }));
+        const m = [['Bitzer','bitzer'],['Güntner','guntner'],['Hansen Technologies','hansen'],['Cabero','cabero'],['Vahterus','vahterus'],['Witt','witt'],['RefComp','refcomp'],['Valvugás','valvugas'],['SRM Tec','srmtec'],['Snowkey','snowkey'],['Dofun','dofun']];
+        return [...m, ...m].map(([nombre, f], i) => ({ id: 'v6-marca-' + i, nombre, logo: 'img/marcas/' + f + '.png' }));
       })(),
       mostrarMarcas: this.props.mostrarMarcas ?? true,
       mostrarCifras: this.props.mostrarCifras ?? true,
